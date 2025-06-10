@@ -6,7 +6,10 @@ import { ForbiddenError } from "../errors/forbidden.error";
 
 export const auth = (app: express.Express) => {
     app.use(async (req: Request, res: Response, next: NextFunction) => {
-        if (req.method === "POST" && req.url.startsWith("/auth/login")) {
+        if (
+            (req.method === "POST" && req.url.startsWith("/auth/login")) ||
+            (req.method === "POST" && req.url.startsWith("auth/recovery"))
+        ) {
             return next(); // se for um POST e a url começa com '/auth/login' passa para o próximo middlerare, que no caso é o routes(app)
         }
 

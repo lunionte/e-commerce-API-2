@@ -10,4 +10,11 @@ export class AuthController {
             token: token,
         });
     }
+
+    // enviar uma resposta positiva para evitar que hackers' saibam se o email existe ou não
+    static async recovery(req: Request, res: Response) {
+        const { email } = req.body;
+        await new AuthService().recovery(email);
+        res.end();
+    }
 }

@@ -3,7 +3,12 @@ import { EmailAlreadyExistsError } from "../errors/email-already-exists.error";
 import { UnauthorizedError } from "../errors/unauthorized.error";
 import { User } from "../models/user.model";
 import { FirebaseAuthError, getAuth, UpdateRequest, UserRecord } from "firebase-admin/auth";
-import { getAuth as getFirebaseAuth, signInWithEmailAndPassword, UserCredential } from "firebase/auth";
+import {
+    getAuth as getFirebaseAuth,
+    sendPasswordResetEmail,
+    signInWithEmailAndPassword,
+    UserCredential,
+} from "firebase/auth";
 // 🔐 Serviço responsável por gerenciar a autenticação de usuários usando Firebase Authentication.
 // Cria usuários com email, senha e displayName no Firebase Auth, garantindo login seguro,
 // controle de senhas e recuperação de conta.
@@ -47,5 +52,13 @@ export class AuthService {
             }
             throw error;
         }
+    }
+
+    async delete(id: string) {
+        await getAuth().deleteUser(id);
+    }
+
+    async recovery(email: string) {
+        await sendPasswordResetEmail(getFirebaseAuth(), email);
     }
 }
