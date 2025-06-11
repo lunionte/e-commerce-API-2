@@ -9,6 +9,7 @@ import {
     signInWithEmailAndPassword,
     UserCredential,
 } from "firebase/auth";
+
 // 🔐 Serviço responsável por gerenciar a autenticação de usuários usando Firebase Authentication.
 // Cria usuários com email, senha e displayName no Firebase Auth, garantindo login seguro,
 // controle de senhas e recuperação de conta.
