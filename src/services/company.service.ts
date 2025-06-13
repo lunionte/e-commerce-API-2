@@ -1,6 +1,7 @@
 import { NotFoundError } from "../errors/not-found.error";
 import { ComapanyRepository } from "../repositories/comapany.repository";
 import { Company } from "../models/comapny.model";
+import { UploadFileService } from "./upload-file.service";
 
 // 🔥 CAMADA RESPONSÁVEL PELA REGRA DE NEGÓCIO
 // Aqui ficam as regras que definem como os dados são manipulados,
@@ -10,9 +11,11 @@ import { Company } from "../models/comapny.model";
 
 export class CompanyService {
     private companyRepository: ComapanyRepository;
+    private uploadFileService: UploadFileService;
 
     constructor() {
         this.companyRepository = new ComapanyRepository();
+        this.uploadFileService = new UploadFileService();
     }
 
     async getAll(): Promise<Company[]> {
@@ -28,7 +31,8 @@ export class CompanyService {
     }
 
     async save(company: Company) {
-        await this.companyRepository.update(company);
+        this.uploadFileService.upload(company.logomarca);
+        //await this.companyRepository.save(company);
     }
 
     async update(id: string, company: Company) {

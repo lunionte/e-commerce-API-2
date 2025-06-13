@@ -9,7 +9,7 @@ import { AuthService } from "./auth.service";
 // O service recebe dados do controller, executa a lógica necessária
 // e utiliza o repository para acessar o banco de dados.
 
-export class CompanyService {
+export class UserService {
     private userRepository;
     private authService;
 

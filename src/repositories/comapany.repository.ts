@@ -42,6 +42,7 @@ export class ComapanyRepository {
     async update(company: Company) {
         let docRef = this.collection.doc(company.id!);
         delete company.id;
+
         await docRef.set(company);
     }
 }
