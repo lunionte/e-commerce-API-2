@@ -1,5 +1,5 @@
 import { CollectionReference, getFirestore } from "firebase-admin/firestore";
-import { User } from "../models/user.model";
+import { User } from "../models/user.model.js";
 
 // 🗄️ Repositório responsável por gerenciar a persistência dos dados dos usuários no Firestore.
 // Armazena informações complementares do usuário (nome, email, etc.) que não fazem parte

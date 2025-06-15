@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { Company } from "../models/comapny.model";
-import { CompanyService } from "../services/company.service";
+import { Company } from "../models/comapny.model.js";
+import { CompanyService } from "../services/company.service.js";
 
 // 🔥 CAMADA RESPONSÁVEL POR RECEBER AS REQUISIÇÕES HTTP
 // Cada método do controller representa um verbo HTTP (GET, POST, PUT, DELETE)

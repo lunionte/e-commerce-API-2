@@ -1,7 +1,7 @@
-import { NotFoundError } from "../errors/not-found.error";
-import { ComapanyRepository } from "../repositories/comapany.repository";
-import { Company } from "../models/comapny.model";
-import { UploadFileService } from "./upload-file.service";
+import { NotFoundError } from "../errors/not-found.error.js";
+import { ComapanyRepository } from "../repositories/comapany.repository.js";
+import { Company } from "../models/comapny.model.js";
+import { UploadFileService } from "./upload-file.service.js";
 
 // 🔥 CAMADA RESPONSÁVEL PELA REGRA DE NEGÓCIO
 // Aqui ficam as regras que definem como os dados são manipulados,
@@ -15,7 +15,7 @@ export class CompanyService {
 
     constructor() {
         this.companyRepository = new ComapanyRepository();
-        this.uploadFileService = new UploadFileService();
+        this.uploadFileService = new UploadFileService("images/companies/"); // nome da pasta virtual
     }
 
     async getAll(): Promise<Company[]> {
@@ -31,8 +31,9 @@ export class CompanyService {
     }
 
     async save(company: Company) {
-        this.uploadFileService.upload(company.logomarca);
-        //await this.companyRepository.save(company);
+        const imageUrl = await this.uploadFileService.upload(company.logomarca); // no upload retorna a publicUrl que é a url da imagem
+        company.logomarca = imageUrl;
+        await this.companyRepository.save(company);
     }
 
     async update(id: string, company: Company) {

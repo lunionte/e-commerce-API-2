@@ -1,7 +1,11 @@
 {
     "name": "ecommerce-api",
     "version": "1.0.0",
-    "main": "index.js",
+    "exports": "./lib/index.js",
+    "type": "module",
+    "engines": {
+        "node": "20"
+    },
     "scripts": {
         "dev": "npx tsc-watch --onSuccess \"node --env-file=.env ./lib/index.js\"",
         "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,14 +15,16 @@
     "license": "ISC",
     "description": "",
     "dependencies": {
+        "@supabase/supabase-js": "^2.50.0",
         "celebrate": "^15.0.3",
         "express": "^5.1.0",
         "express-async-handler": "^1.2.0",
+        "file-type": "^21.0.0",
         "firebase": "^11.8.1",
         "firebase-admin": "^13.4.0"
     },
     "devDependencies": {
-        "@tsconfig/recommended": "^1.0.8",
+        "@tsconfig/node20": "^20.1.6",
         "@types/express": "^5.0.2",
         "@types/node": "^22.15.29",
         "tsc-watch": "^6.2.0",

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { User } from "../models/user.model";
-import { UserService } from "../services/user.service";
+import { User } from "../models/user.model.js";
+import { UserService } from "../services/user.service.js";
 
 // 🔥 CAMADA RESPONSÁVEL POR RECEBER AS REQUISIÇÕES HTTP
 // Cada método do controller representa um verbo HTTP (GET, POST, PUT, DELETE)
