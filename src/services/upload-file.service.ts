@@ -1,6 +1,8 @@
 import { randomUUID } from "crypto";
 import { createClient } from "@supabase/supabase-js";
 import { fileTypeFromBuffer } from "file-type";
+import { ValidationError } from "../errors/validation.error.js";
+import { InternalServerError } from "../errors/internal-server.error.js";
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseApiKey = process.env.SUPABASE_API_KEY;
@@ -17,9 +19,22 @@ export class UploadFileService {
     async upload(base64: string) {
         const fileBufer = Buffer.from(base64, "base64"); // transforma aquela string gigante em uma imagem em binário
         const fileType = await fileTypeFromBuffer(fileBufer);
+
+        if (!fileType) {
+            throw new ValidationError("A extensão do arquivo não é valido");
+        }
+
+        if (fileType.mime !== "image/png" && fileType.mime !== "image/jpeg") {
+            throw new ValidationError("A imagem precisa ser PNG ou JPEG");
+        }
+
         const fileName = `${this.path}${randomUUID()}.${fileType?.ext}`; // o ext é a extensão do arquivo (png, jpeg)
 
-        await supabase.storage.from("companies-upload").upload(fileName, fileBufer); // faz o upload da imagem na 'pasta virtual' images/nomeDaimg
+        const { error } = await supabase.storage.from("companies-upload").upload(fileName, fileBufer); // upload(path, fileBody (buffer))
+
+        if (error) {
+            throw new InternalServerError(`Erro no Upload do Servidor: ${error.message}`);
+        }
 
         const { data } = supabase.storage.from("companies-upload").getPublicUrl(fileName);
 

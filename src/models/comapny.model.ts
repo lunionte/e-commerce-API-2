@@ -16,7 +16,7 @@ export type Company = {
 
 export const newCompanySchema = Joi.object({
     logomarca: Joi.string().base64().required(),
-    cpfCnpj: Joi.alternatives().try(Joi.string().length(11).required(), Joi.string().length(14).required()),
+    cpfCnpj: Joi.alternatives().try(Joi.string().length(11).required(), Joi.string().length(14).required()).required(),
     razaoSocial: Joi.string().required(),
     nomeFantasia: Joi.string().required(),
     telefone: Joi.string()
@@ -30,8 +30,13 @@ export const newCompanySchema = Joi.object({
 });
 
 export const updateCompanySchema = Joi.object({
-    logomarca: Joi.string().allow(null),
-    cpfCnpj: Joi.alternatives().try(Joi.string().length(11).required(), Joi.string().length(14).required()),
+    logomarca: Joi.alternatives()
+        .try(
+            Joi.string().base64().required(), // se ja ja tiver logomarca, quando for alterar tem que enviar um base 64
+            Joi.string().uri().required()
+        )
+        .required(),
+    cpfCnpj: Joi.alternatives().try(Joi.string().length(11).required(), Joi.string().length(14).required()).required(),
     razaoSocial: Joi.string().required(),
     nomeFantasia: Joi.string().required(),
     telefone: Joi.string()

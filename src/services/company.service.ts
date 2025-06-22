@@ -2,6 +2,7 @@ import { NotFoundError } from "../errors/not-found.error.js";
 import { ComapanyRepository } from "../repositories/comapany.repository.js";
 import { Company } from "../models/comapny.model.js";
 import { UploadFileService } from "./upload-file.service.js";
+import { ValidationError } from "../errors/validation.error.js";
 
 // 🔥 CAMADA RESPONSÁVEL PELA REGRA DE NEGÓCIO
 // Aqui ficam as regras que definem como os dados são manipulados,
@@ -42,6 +43,11 @@ export class CompanyService {
             throw new NotFoundError("Empresa não encontrado!");
         }
 
+        // só altera a logomarca se for um base64, se for uma url ele continua do jeito que tá
+        if (!this.isValidUrl(company.logomarca)) {
+            company.logomarca = await this.uploadFileService.upload(company.logomarca);
+        }
+
         Object.assign(_company, {
             logomarca: company.logomarca,
             cpfCnpj: company.cpfCnpj,
@@ -56,5 +62,20 @@ export class CompanyService {
         });
 
         await this.companyRepository.update(_company);
+    }
+
+    private isValidUrl(urlString: string): boolean {
+        try {
+            const url = new URL(urlString);
+            if (url.origin === "https://ymevvwcalqcinjkquajc.supabase.co") {
+                throw new ValidationError("URL de origem invalida");
+            }
+            return true;
+        } catch (error) {
+            if (error instanceof ValidationError) {
+                throw error;
+            }
+            return false;
+        }
     }
 }
