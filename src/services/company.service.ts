@@ -38,10 +38,7 @@ export class CompanyService {
     }
 
     async update(id: string, company: Company) {
-        const _company = await this.companyRepository.getById(id);
-        if (!_company) {
-            throw new NotFoundError("Empresa não encontrado!");
-        }
+        const _company = await this.getById(id);
 
         // só altera a logomarca se for um base64, se for uma url ele continua do jeito que tá
         if (!this.isValidUrl(company.logomarca)) {

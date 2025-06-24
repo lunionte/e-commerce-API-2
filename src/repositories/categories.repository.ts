@@ -1,4 +1,5 @@
 import { CollectionReference, getFirestore } from "firebase-admin/firestore";
+
 import { Category } from "../models/category.model.js";
 
 export class CategoriesRepository {

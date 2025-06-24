@@ -11,7 +11,7 @@ export const newCategorySchema = Joi.object().keys({
     ativa: Joi.boolean().only().allow(true).default(true),
 });
 
-export const updateCategory = Joi.object().keys({
+export const updateCategorySchema = Joi.object().keys({
     descricao: Joi.string().min(3).required(),
     ativa: Joi.boolean().required(),
 });
