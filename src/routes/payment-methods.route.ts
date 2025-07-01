@@ -17,4 +17,4 @@ paymentMethodRoutes.put(
     celebrate({ [Segments.BODY]: updatePaymentSchema }),
     asyncHandler(PaymentMethodController.update)
 );
-paymentMethodRoutes.delete("/payment-methods/:id    ", asyncHandler(PaymentMethodController.delete));
+paymentMethodRoutes.delete("/payment-methods/:id", asyncHandler(PaymentMethodController.delete));
