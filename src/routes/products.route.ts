@@ -2,11 +2,16 @@ import { Router } from "express";
 import asyncHandler from "express-async-handler";
 import { ProductsController } from "../controllers/products.controller.js";
 import { celebrate, Segments } from "celebrate";
-import { newProductSchema, updateProductSchema } from "../models/product.model.js";
+import { newProductSchema, searchQuerySchema, updateProductSchema } from "../models/product.model.js";
 
 export const productsRoutes = Router();
 
 productsRoutes.get("/products", asyncHandler(ProductsController.getAll));
+productsRoutes.get(
+    "/products/search",
+    celebrate({ [Segments.QUERY]: searchQuerySchema }),
+    asyncHandler(ProductsController.search)
+);
 productsRoutes.get("/products/:id", asyncHandler(ProductsController.getById));
 productsRoutes.post(
     "/products",

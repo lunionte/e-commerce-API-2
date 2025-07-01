@@ -1,14 +1,18 @@
 import { NotFoundError } from "../errors/not-found.error.js";
+import { ValidationError } from "../errors/validation.error.js";
 import { Category } from "../models/category.model.js";
 import { CategoriesRepository } from "../repositories/categories.repository.js";
+import { ProductsRepository } from "../repositories/products.repository.js";
 
 // método mais limpo e flexível
 
 export class CategoriesService {
     private categoriesRepostiroy: CategoriesRepository;
+    private productsRepository: ProductsRepository;
 
     constructor() {
         this.categoriesRepostiroy = new CategoriesRepository();
+        this.productsRepository = new ProductsRepository();
     }
 
     async getAll() {
@@ -40,6 +44,10 @@ export class CategoriesService {
     }
 
     async delete(id: string) {
+        const categoriesCount = await this.productsRepository.getCountByCategoria(id);
+        if (categoriesCount > 0) {
+            throw new ValidationError("Não é possível excluir uma categoria com produtos relacionados");
+        }
         await this.categoriesRepostiroy.delete(id);
     }
 }

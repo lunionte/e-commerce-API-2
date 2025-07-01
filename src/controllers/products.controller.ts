@@ -7,6 +7,13 @@ export class ProductsController {
         res.json(await new ProductsService().getAll());
     }
 
+    static async search(req: Request, res: Response) {
+        const categoryId = req.query.categoryId as string;
+        const product = await new ProductsService().search(categoryId);
+
+        res.json(product);
+    }
+
     static async getById(req: Request, res: Response) {
         const id = req.params.id;
         res.json(await new ProductsService().getById(id));

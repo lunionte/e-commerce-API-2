@@ -20,6 +20,10 @@ export class ProductsService {
         return this.productRepository.getAll();
     }
 
+    async search(categoryId: string): Promise<Product[]> {
+        return this.productRepository.search(categoryId);
+    }
+
     async getById(id: string) {
         const product = this.productRepository.getById(id);
         if (!product) {
