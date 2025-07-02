@@ -10,22 +10,22 @@ export interface User {
 }
 
 export const newUserSchema = Joi.object().keys({
-    nome: Joi.string().required(),
-    email: Joi.string().email().required(),
-    password: Joi.string().min(6).required(),
+    nome: Joi.string().trim().required(),
+    email: Joi.string().trim().email().required(),
+    password: Joi.string().trim().min(6).required(),
 });
 
 export const updateUserSchema = Joi.object().keys({
-    nome: Joi.string().required(),
-    email: Joi.string().email().required(),
-    password: Joi.string().min(6),
+    nome: Joi.string().trim().required(),
+    email: Joi.string().trim().email().required(),
+    password: Joi.string().trim().min(6),
 });
 
 export const authLoginSchema = Joi.object().keys({
-    email: Joi.string().email().required(),
-    password: Joi.string().min(6),
+    email: Joi.string().trim().email().required(),
+    password: Joi.string().trim().min(6),
 });
 
 export const authRecoverySchema = Joi.object().keys({
-    email: Joi.string().email().required(),
+    email: Joi.string().trim().email().required(),
 });

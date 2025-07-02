@@ -12,8 +12,8 @@ export type Product = {
 };
 
 export const newProductSchema = Joi.object().keys({
-    nome: Joi.string().min(3).required(),
-    descricao: Joi.string().allow(null).default(null),
+    nome: Joi.string().trim().min(3).required(),
+    descricao: Joi.string().trim().allow(null).default(null),
     preco: Joi.number().positive().required(),
     imagem: Joi.string().base64().allow(null).default(null),
     categoria: Joi.object()
@@ -25,8 +25,8 @@ export const newProductSchema = Joi.object().keys({
 });
 
 export const updateProductSchema = Joi.object().keys({
-    nome: Joi.string().min(3).required(),
-    descricao: Joi.string().allow(null).default(null),
+    nome: Joi.string().trim().min(3).required(),
+    descricao: Joi.string().trim().allow(null).default(null),
     preco: Joi.number().positive().required(),
     imagem: Joi.alternatives()
         .try(Joi.string().base64().required(), Joi.string().uri().required())
@@ -41,5 +41,5 @@ export const updateProductSchema = Joi.object().keys({
 });
 
 export const searchQuerySchema = Joi.object().keys({
-    categoryId: Joi.string().required(),
+    categoryId: Joi.string().trim().required(),
 });
