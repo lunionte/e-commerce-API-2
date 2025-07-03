@@ -2,7 +2,7 @@ import { Joi } from "celebrate";
 import { Address, orderAddressSchema } from "./address.model.js";
 import { Company } from "./comapny.model.js";
 import { Customer, customerShema } from "./customer.model.js";
-import { OrderItem } from "./order-item.model.js";
+import { OrderItem, orderItemSchema } from "./order-item.model.js";
 import { PaymentMethod } from "./payments-methods.model.js";
 
 export type Order = {
@@ -14,7 +14,7 @@ export type Order = {
     isEntrega: boolean;
     formaPagamento: PaymentMethod;
     taxaEntrega: number;
-    items: OrderItem;
+    items: OrderItem[];
     status: OrderStatus;
 };
 
@@ -33,7 +33,12 @@ export const newOrderSchema = Joi.object().keys({
         })
         .required(),
     cliente: customerShema.required(),
-    endereco: orderAddressSchema.required(),
+    endereco: Joi.alternatives().conditional("isEntrega", {
+        is: true,
+        then: orderAddressSchema.required(),
+        // valid(null) é a mesma coisa de only().allow(null)
+        otherwise: Joi.object().only().allow(null).default(null),
+    }),
     cpfCnpjCupom: Joi.alternatives()
         .try(Joi.string().length(11).required(), Joi.string().length(14).required())
         .default(null),
@@ -42,6 +47,6 @@ export const newOrderSchema = Joi.object().keys({
         id: Joi.string().trim().required(),
     }),
     taxaEntrega: Joi.number().min(0).required(),
-    items: Joi.array(),
+    items: Joi.array().items(orderItemSchema).min(1),
     status: Joi.string().only().allow(OrderStatus.pendente).default(OrderStatus.pendente).required(),
 });
