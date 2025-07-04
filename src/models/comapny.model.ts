@@ -15,7 +15,9 @@ export type Company = {
 };
 
 export const newCompanySchema = Joi.object({
-    logomarca: Joi.string().base64().required(),
+    logomarca: Joi.alternatives()
+        .try(Joi.string().base64().required(), Joi.string().uri().trim().required(), Joi.valid(null))
+        .required(),
     cpfCnpj: Joi.alternatives()
         .try(Joi.string().trim().length(11).required(), Joi.string().trim().length(14).required())
         .required(),

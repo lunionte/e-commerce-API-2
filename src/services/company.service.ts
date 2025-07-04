@@ -32,8 +32,11 @@ export class CompanyService {
     }
 
     async save(company: Company) {
-        const imageUrl = await this.uploadFileService.upload(company.logomarca); // no upload retorna a publicUrl que é a url da imagem
-        company.logomarca = imageUrl;
+        if (company.logomarca !== null && !isStorageUrlValid(company.logomarca)) {
+            const imageUrl = await this.uploadFileService.upload(company.logomarca); // no upload retorna a publicUrl que é a url da imagem
+            company.logomarca = imageUrl;
+        }
+
         await this.companyRepository.save(company);
     }
 
