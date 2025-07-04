@@ -1,6 +1,6 @@
 import { NotFoundError } from "../errors/not-found.error.js";
 import { ValidationError } from "../errors/validation.error.js";
-import { Order } from "../models/order.model.js";
+import { Order, QueryParamsOrder } from "../models/order.model.js";
 import { ComapanyRepository } from "../repositories/comapany.repository.js";
 import { OrderRepostitory } from "../repositories/order.repository.js";
 import { PaymentMethodsRepository } from "../repositories/payment-methods.repository.js";
@@ -42,5 +42,9 @@ export class OrderService {
             item.produto = produto;
         }
         await this.orderRepository.save(order);
+    }
+
+    async search(queryParams: QueryParamsOrder): Promise<Order[]> {
+        return await this.orderRepository.search(queryParams);
     }
 }

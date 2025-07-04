@@ -50,3 +50,18 @@ export const newOrderSchema = Joi.object().keys({
     items: Joi.array().items(orderItemSchema).min(1),
     status: Joi.string().only().allow(OrderStatus.pendente).default(OrderStatus.pendente).required(),
 });
+
+export type QueryParamsOrder = {
+    empresaId?: string;
+    dataInicio?: Date;
+    dataFim?: Date;
+    status?: OrderStatus;
+};
+
+export const searchParamsOrderSchema = Joi.object().keys({
+    empresaId: Joi.string().trim(),
+    dataInicio: Joi.date(),
+    dataFim: Joi.date(),
+    status: Joi.string().valid(...Object.values(OrderStatus)),
+    categoria: Joi.string().uppercase(),
+});
