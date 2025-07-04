@@ -7,3 +7,4 @@ import { OrdersController } from "../controllers/orders.controller.js";
 export const orderRoutes = Router();
 
 orderRoutes.post("/orders", celebrate({ [Segments.BODY]: newOrderSchema }), asyncHandler(OrdersController.save));
+orderRoutes.get("/orders", celebrate({}), asyncHandler(OrdersController.save));
