@@ -56,6 +56,7 @@ export type QueryParamsOrder = {
     dataInicio?: Date;
     dataFim?: Date;
     status?: OrderStatus;
+    nomeCliete?: string;
 };
 
 export const searchParamsOrderSchema = Joi.object().keys({
@@ -64,4 +65,5 @@ export const searchParamsOrderSchema = Joi.object().keys({
     dataFim: Joi.date(),
     status: Joi.string().valid(...Object.values(OrderStatus)),
     categoria: Joi.string().uppercase(),
+    nomeCliente: Joi.string().uppercase().trim(),
 });

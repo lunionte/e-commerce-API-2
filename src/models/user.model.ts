@@ -10,13 +10,13 @@ export interface User {
 }
 
 export const newUserSchema = Joi.object().keys({
-    nome: Joi.string().trim().required(),
+    nome: Joi.string().uppercase().required(),
     email: Joi.string().trim().email().required(),
     password: Joi.string().trim().min(6).required(),
 });
 
 export const updateUserSchema = Joi.object().keys({
-    nome: Joi.string().trim().required(),
+    nome: Joi.string().uppercase().trim().required(),
     email: Joi.string().trim().email().required(),
     password: Joi.string().trim().min(6),
 });

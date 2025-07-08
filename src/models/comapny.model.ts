@@ -21,8 +21,8 @@ export const newCompanySchema = Joi.object({
     cpfCnpj: Joi.alternatives()
         .try(Joi.string().trim().length(11).required(), Joi.string().trim().length(14).required())
         .required(),
-    razaoSocial: Joi.string().required(),
-    nomeFantasia: Joi.string().required(),
+    razaoSocial: Joi.string().uppercase().trim().required(),
+    nomeFantasia: Joi.string().uppercase().trim().required(),
     telefone: Joi.string()
         .regex(/^([1-9]{2}9[0-9]{8}|[1-9]{2}[2-8][0-9]{7})$/)
         .required(),
@@ -43,8 +43,8 @@ export const updateCompanySchema = Joi.object({
     cpfCnpj: Joi.alternatives()
         .try(Joi.string().trim().length(11).required(), Joi.string().trim().trim().length(14).required())
         .required(),
-    razaoSocial: Joi.string().required(),
-    nomeFantasia: Joi.string().required(),
+    razaoSocial: Joi.string().uppercase().trim().required(),
+    nomeFantasia: Joi.string().uppercase().trim().required(),
     telefone: Joi.string()
         .regex(/^([1-9]{2}9[0-9]{8}|[1-9]{2}[2-8][0-9]{7})$/)
         .required(),
