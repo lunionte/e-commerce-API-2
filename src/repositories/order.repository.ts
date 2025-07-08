@@ -16,8 +16,8 @@ export class OrderRepostitory {
         // se não colocar isso
         let query: FirebaseFirestore.Query = this.collection;
 
-        if (queryParams.nomeCliete) {
-            query = query.where("cliente.nome", "==", queryParams.nomeCliete);
+        if (queryParams.nomeCliente) {
+            query = query.where("cliente.nome", "==", queryParams.nomeCliente);
         }
 
         if (queryParams.empresaId) {

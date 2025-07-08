@@ -23,6 +23,7 @@ export class OrderService {
         const empresa = await this.companyRepository.getById(order.empresa.id!);
         const formaPagamento = await this.paymentMethodRepository.getById(order.formaPagamento.id);
 
+        // se não achar o id, retorna um erro
         if (!empresa) {
             throw new NotFoundError("Empresa não encontrada");
         }
