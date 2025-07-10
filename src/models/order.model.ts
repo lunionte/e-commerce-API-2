@@ -19,11 +19,11 @@ export type Order = {
 };
 
 export enum OrderStatus {
-    pendente = "pendente",
-    aprovado = "aprovado",
-    entrega = "entrega",
-    concluido = "concluido",
-    cancelado = "cancelado",
+    pendente = "PENDENTE",
+    aprovado = "APROVADO",
+    entrega = "ENTREGA",
+    concluido = "CONCLUIDO",
+    cancelado = "CANCELADO",
 }
 
 export const newOrderSchema = Joi.object().keys({
@@ -48,7 +48,7 @@ export const newOrderSchema = Joi.object().keys({
     }),
     taxaEntrega: Joi.number().min(0).required(),
     items: Joi.array().items(orderItemSchema).min(1),
-    status: Joi.string().only().allow(OrderStatus.pendente).default(OrderStatus.pendente).required(),
+    status: Joi.string().only().allow(OrderStatus.pendente).default(OrderStatus.pendente).required().uppercase(),
 });
 
 export type QueryParamsOrder = {
@@ -56,7 +56,6 @@ export type QueryParamsOrder = {
     dataInicio?: Date;
     dataFim?: Date;
     status?: OrderStatus;
-    nomeCliente?: string;
 };
 
 export const searchParamsOrderSchema = Joi.object().keys({
@@ -65,7 +64,6 @@ export const searchParamsOrderSchema = Joi.object().keys({
     dataFim: Joi.date(),
     status: Joi.string()
         .valid(...Object.values(OrderStatus))
-        .lowercase(),
+        .uppercase(),
     categoria: Joi.string().uppercase(),
-    nomeCliente: Joi.string().uppercase().trim(),
 });
