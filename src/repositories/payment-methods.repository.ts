@@ -1,28 +1,21 @@
-import { CollectionReference, getFirestore, QuerySnapshot } from "firebase-admin/firestore";
-import { PaymentMethod } from "../models/payments-methods.model.js";
+import { CollectionReference, getFirestore } from "firebase-admin/firestore";
+import { PaymentMethod, paymentMethodConverter } from "../models/payments-methods.model.js";
 
 export class PaymentMethodsRepository {
-    private collection: CollectionReference;
+    private collection: CollectionReference<PaymentMethod>;
 
     constructor() {
-        this.collection = getFirestore().collection("payment-methods");
+        this.collection = getFirestore().collection("payment-methods").withConverter(paymentMethodConverter);
     }
 
     async getAll() {
         const snapshot = await this.collection.get();
-        return this.snapshotToArray(snapshot);
+        return snapshot.docs.map((doc) => doc.data());
     }
 
     async getById(id: string) {
         const doc = await this.collection.doc(id).get();
-        if (doc.exists) {
-            return {
-                id: doc.id,
-                ...doc.data(),
-            } as PaymentMethod;
-        } else {
-            return null;
-        }
+        return doc.data() ?? null;
     }
 
     async save(paymentMethod: PaymentMethod) {
@@ -30,24 +23,10 @@ export class PaymentMethodsRepository {
     }
 
     async update(paymentMethod: PaymentMethod) {
-        let docRef = this.collection.doc(paymentMethod.id);
-
-        await docRef.set({
-            descricao: paymentMethod.descricao,
-            ativa: paymentMethod.ativa,
-        });
+        await this.collection.doc(paymentMethod.id).set(paymentMethod);
     }
 
     async delete(id: string) {
         await this.collection.doc(id).delete();
-    }
-
-    private snapshotToArray(snapshot: QuerySnapshot) {
-        return snapshot.docs.map((doc) => {
-            return {
-                id: doc.id,
-                ...doc.data(),
-            };
-        }) as PaymentMethod[];
     }
 }

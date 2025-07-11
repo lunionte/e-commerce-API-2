@@ -1,5 +1,5 @@
 import { CollectionReference, getFirestore } from "firebase-admin/firestore";
-import { User } from "../models/user.model.js";
+import { User, userConverter } from "../models/user.model.js";
 
 // 🗄️ Repositório responsável por gerenciar a persistência dos dados dos usuários no Firestore.
 // Armazena informações complementares do usuário (nome, email, etc.) que não fazem parte
@@ -7,45 +7,28 @@ import { User } from "../models/user.model.js";
 // Realiza operações CRUD na coleção "users" do Firestore.
 
 export class UserRepository {
-    private collection: CollectionReference;
+    private collection: CollectionReference<User>;
 
     constructor() {
-        this.collection = getFirestore().collection("users");
+        this.collection = getFirestore().collection("users").withConverter(userConverter);
     }
 
     async getAll(): Promise<User[]> {
         const snapshot = await this.collection.get();
-        return snapshot.docs.map((doc) => {
-            return {
-                id: doc.id,
-                ...doc.data(),
-            };
-        }) as User[];
+        return snapshot.docs.map((doc) => doc.data());
     }
 
     async getById(id: string): Promise<User | null> {
         const doc = await this.collection.doc(id).get();
-        if (doc.exists) {
-            return {
-                id: doc.id,
-                ...doc.data(),
-            } as User;
-        } else {
-            return null;
-        }
+        return doc.data() ?? null;
     }
 
     async save(user: User) {
-        delete user.password;
         await this.collection.add(user);
     }
 
     async update(user: User) {
-        let docRef = this.collection.doc(user.id);
-        await docRef.set({
-            nome: user.nome,
-            email: user.email,
-        });
+        await this.collection.doc(user.id).set(user);
     }
 
     async delete(id: string) {

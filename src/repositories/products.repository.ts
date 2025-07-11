@@ -1,44 +1,26 @@
-import { CollectionReference, getFirestore, QuerySnapshot } from "firebase-admin/firestore";
-import { Product } from "../models/product.model.js";
+import { CollectionReference, getFirestore } from "firebase-admin/firestore";
+import { Product, productConverter } from "../models/product.model.js";
 
 export class ProductsRepository {
-    private collection: CollectionReference;
+    private collection: CollectionReference<Product>;
 
     constructor() {
-        this.collection = getFirestore().collection("products");
+        this.collection = getFirestore().collection("products").withConverter(productConverter);
     }
 
     async getAll() {
         const snapshot = await this.collection.get();
-        return this.snapshotToArray(snapshot);
+        return snapshot.docs.map((doc) => doc.data());
     }
 
     async search(categoryId: string): Promise<Product[]> {
-        // o categoria.id é o do products, não o geral do firebase
-        // ele entra no products, procura em cada produto onde a categoria.id é = categoryId
         const snapshot = await this.collection.where("categoria.id", "==", categoryId).get();
-        return this.snapshotToArray(snapshot);
+        return snapshot.docs.map((doc) => doc.data());
     }
 
     async getById(id: string) {
         const doc = await this.collection.doc(id).get();
-        if (doc.exists) {
-            return {
-                id: doc.id,
-                ...doc.data(),
-            } as Product;
-        } else {
-            return null;
-        }
-    }
-
-    private snapshotToArray(snapshot: QuerySnapshot): Product[] {
-        return snapshot.docs.map((doc) => {
-            return {
-                id: doc.id,
-                ...doc.data(),
-            };
-        }) as Product[];
+        return doc.data() ?? null;
     }
 
     async save(product: Product) {
@@ -46,15 +28,7 @@ export class ProductsRepository {
     }
 
     async update(product: Product) {
-        let docRef = this.collection.doc(product.id);
-        await docRef.set({
-            nome: product.nome,
-            descricao: product.descricao,
-            preco: product.preco,
-            imagem: product.imagem,
-            categoria: product.categoria,
-            ativa: product.ativa,
-        });
+        await this.collection.doc(product.id).set(product);
     }
 
     async delete(id: string) {
