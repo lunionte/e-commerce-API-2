@@ -17,6 +17,7 @@
     "dependencies": {
         "@supabase/supabase-js": "^2.50.0",
         "celebrate": "^15.0.3",
+        "dayjs": "^1.11.13",
         "express": "^5.1.0",
         "express-async-handler": "^1.2.0",
         "file-type": "^21.0.0",

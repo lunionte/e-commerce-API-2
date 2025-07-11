@@ -1,5 +1,6 @@
 import { CollectionReference, getFirestore } from "firebase-admin/firestore";
 import { Order, QueryParamsOrder } from "../models/order.model.js";
+import dayjs from "dayjs";
 
 export class OrderRepostitory {
     private collection: CollectionReference;
@@ -28,19 +29,24 @@ export class OrderRepostitory {
         }
 
         if (queryParams.dataInicio) {
+            // adiciona mais um dia na data, faz ela começar no inicio do dia (00:00) e no formato dd/mm/yyyy
+            queryParams.dataInicio = dayjs(queryParams.dataInicio).add(1, "day").startOf("day").toDate();
+            console.log(`Data início: ${queryParams.dataInicio}`);
             query = query.where("data", ">=", queryParams.dataInicio);
         }
 
         if (queryParams.dataFim) {
+            queryParams.dataFim = dayjs(queryParams.dataFim).add(1, "day").endOf("day").toDate();
+            console.log(`Data fim: ${queryParams.dataFim}`);
             query = query.where("data", "<=", queryParams.dataFim);
         }
 
         const snapshot = await query.get();
         return snapshot.docs.map((doc) => {
-            return {
+            return new Order({
                 id: doc.id,
                 ...doc.data(),
-            } as unknown;
+            });
         }) as Order[];
     }
 }
