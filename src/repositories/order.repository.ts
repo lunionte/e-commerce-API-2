@@ -1,12 +1,12 @@
 import { CollectionReference, getFirestore } from "firebase-admin/firestore";
-import { Order, QueryParamsOrder } from "../models/order.model.js";
+import { Order, orderConverter, QueryParamsOrder } from "../models/order.model.js";
 import dayjs from "dayjs";
 
 export class OrderRepostitory {
-    private collection: CollectionReference;
+    private collection: CollectionReference<Order>;
 
     constructor() {
-        this.collection = getFirestore().collection("orders");
+        this.collection = getFirestore().collection("orders").withConverter(orderConverter);
     }
 
     async save(order: Order) {
@@ -15,7 +15,7 @@ export class OrderRepostitory {
 
     async search(queryParams: QueryParamsOrder): Promise<Order[]> {
         // se não colocar isso
-        let query: FirebaseFirestore.Query = this.collection;
+        let query: FirebaseFirestore.Query<Order> = this.collection;
 
         if (queryParams.empresaId) {
             // o novo query agora é como se fosse o this.collection.where("empresa.id", "==", queryParams.empresaId)
@@ -42,11 +42,6 @@ export class OrderRepostitory {
         }
 
         const snapshot = await query.get();
-        return snapshot.docs.map((doc) => {
-            return new Order({
-                id: doc.id,
-                ...doc.data(),
-            });
-        }) as Order[];
+        return snapshot.docs.map((doc) => doc.data());
     }
 }

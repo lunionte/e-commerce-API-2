@@ -42,8 +42,7 @@ export class OrderService {
 
             item.produto = produto;
         }
-        // a data tem que ser gerada pelo back-end
-        order.data = new Date();
+
         await this.orderRepository.save(order);
     }
 
