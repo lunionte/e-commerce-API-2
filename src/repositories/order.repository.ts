@@ -2,6 +2,7 @@ import { CollectionReference, getFirestore } from "firebase-admin/firestore";
 import { Order, orderConverter, QueryParamsOrder } from "../models/order.model.js";
 import dayjs from "dayjs";
 import { OrderItem, orderItemConverter } from "../models/order-item.model.js";
+import { NotFoundError } from "../errors/not-found.error.js";
 
 export class OrderRepostitory {
     private collection: CollectionReference<Order>;
@@ -79,5 +80,16 @@ export class OrderRepostitory {
 
         // Retorna a lista de itens do pedido, já como instâncias OrderItem.
         return snapshot.docs.map((doc) => doc.data());
+    }
+
+    async getById(pedidoId: string): Promise<Order> {
+        const orderRef = await this.collection.doc(pedidoId).get();
+        const order = orderRef.data();
+        if (!order) {
+            throw new NotFoundError("Pedido não encontrado!");
+        }
+        // adiciona novamente o array de items no pedido
+        order.items = await this.getItems(pedidoId);
+        return order;
     }
 }

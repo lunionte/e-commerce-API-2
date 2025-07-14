@@ -13,3 +13,4 @@ orderRoutes.get(
     asyncHandler(OrdersController.search)
 );
 orderRoutes.get("/orders/:id/items", asyncHandler(OrdersController.getItems));
+orderRoutes.get("/orders/:id/", asyncHandler(OrdersController.getById));

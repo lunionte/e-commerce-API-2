@@ -23,4 +23,8 @@ export class OrdersController {
         const items = await new OrderService().getItems(req.params.id);
         res.json(items);
     }
+    static async getById(req: Request, res: Response) {
+        const pedido = await new OrderService().getById(req.params.id);
+        res.json(pedido);
+    }
 }
