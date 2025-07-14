@@ -16,13 +16,15 @@ export class Order {
     isEntrega: boolean;
     formaPagamento: PaymentMethod;
     taxaEntrega: number;
-    items: OrderItem[];
+    items?: OrderItem[];
     status: OrderStatus;
     observacao: string;
+    subtotal: number;
+    total: number;
 
     constructor(data: Order | any) {
         this.id = data.id;
-        this.empresa = data.empresa;
+        this.empresa = new Company(data.empresa);
         this.cliente = data.cliente;
         this.endereco = data.endereco;
         this.cpfCnpjCupom = data.cpfCnpjCupom;
@@ -32,11 +34,28 @@ export class Order {
             this.data = data.data;
         }
         this.isEntrega = data.isEntrega;
-        this.formaPagamento = data.formaPagamento;
+        // Converte os dados brutos de formaPagamento em uma instância da classe PaymentMethod.
+        // Isso permite aplicar a lógica de inicialização do construtor (ex: valores padrão para 'ativa')
+        // e utilizar os métodos e comportamentos definidos na classe PaymentMethod.
+        this.formaPagamento = new PaymentMethod(data.formaPagamento);
+        this.formaPagamento = new PaymentMethod(data.formaPagamento);
         this.taxaEntrega = data.taxaEntrega;
-        this.items = data.items;
+        // da a possibilidade de usar os metodos do orderitem
+        this.items = data.items?.map((item: any) => new OrderItem(item));
         this.status = data.status ?? OrderStatus.pendente;
         this.observacao = data.observacao;
+        this.subtotal = data.subtotal;
+        this.total = data.total;
+    }
+
+    getSubTotal(): number {
+        // gera uma array de totais de cada produto, depois reduz essa array para 1 valor só totalizando o total de cada valor da array
+        // por exemplo [10,30,50] => 1000
+        return this.items?.map((item) => item.getTotal()).reduce((total, next) => total + next, 0) ?? 0;
+    }
+
+    getTotal(): number {
+        return this.getSubTotal() + this.taxaEntrega;
     }
 }
 
@@ -125,6 +144,8 @@ export const orderConverter: FirestoreDataConverter<Order> = {
             taxaEntrega: order.taxaEntrega,
             status: order.status,
             observacao: order.observacao,
+            subtotal: order.getSubTotal(),
+            total: order.getTotal(),
         };
     },
     fromFirestore: (snapshot: FirebaseFirestore.QueryDocumentSnapshot): Order => {

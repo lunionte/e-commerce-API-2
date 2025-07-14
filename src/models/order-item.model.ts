@@ -14,6 +14,10 @@ export class OrderItem {
         this.qtde = data.qtde;
         this.observacao = data.observacao;
     }
+    // total é o valor do produtos x a quantidade, sem contar os descontos e taxa de entrega
+    getTotal(): number {
+        return this.qtde * this.produto.preco;
+    }
 }
 
 export const orderItemSchema = Joi.object().keys({

@@ -12,3 +12,4 @@ orderRoutes.get(
     celebrate({ [Segments.QUERY]: searchParamsOrderSchema }),
     asyncHandler(OrdersController.search)
 );
+orderRoutes.get("/orders/:id/items", asyncHandler(OrdersController.getItems));

@@ -1,5 +1,6 @@
 import { NotFoundError } from "../errors/not-found.error.js";
 import { ValidationError } from "../errors/validation.error.js";
+import { OrderItem } from "../models/order-item.model.js";
 import { Order, QueryParamsOrder } from "../models/order.model.js";
 import { ComapanyRepository } from "../repositories/comapany.repository.js";
 import { OrderRepostitory } from "../repositories/order.repository.js";
@@ -34,7 +35,7 @@ export class OrderService {
         }
         order.formaPagamento = formaPagamento;
 
-        for (let item of order.items) {
+        for (let item of order.items!) {
             const produto = await this.productsRepository.getById(item.produto.id);
             if (!produto) {
                 throw new ValidationError("Produto não encontrado");
@@ -48,5 +49,9 @@ export class OrderService {
 
     async search(queryParams: QueryParamsOrder): Promise<Order[]> {
         return await this.orderRepository.search(queryParams);
+    }
+
+    async getItems(pedidoId: string): Promise<OrderItem[]> {
+        return await this.orderRepository.getItems(pedidoId);
     }
 }

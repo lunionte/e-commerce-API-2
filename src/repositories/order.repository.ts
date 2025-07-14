@@ -1,7 +1,7 @@
 import { CollectionReference, getFirestore } from "firebase-admin/firestore";
 import { Order, orderConverter, QueryParamsOrder } from "../models/order.model.js";
 import dayjs from "dayjs";
-import { orderItemConverter } from "../models/order-item.model.js";
+import { OrderItem, orderItemConverter } from "../models/order-item.model.js";
 
 export class OrderRepostitory {
     private collection: CollectionReference<Order>;
@@ -19,7 +19,7 @@ export class OrderRepostitory {
 
         // Itens do pedido
         const itemsRef = orderRef.collection("items").withConverter(orderItemConverter);
-        for (let item of order.items) {
+        for (let item of order.items!) {
             batch.create(itemsRef.doc(), item);
         }
 
@@ -65,6 +65,19 @@ export class OrderRepostitory {
         }
 
         const snapshot = await query.get();
+        return snapshot.docs.map((doc) => doc.data());
+    }
+
+    async getItems(pedidoId: string): Promise<OrderItem[]> {
+        // Acessa o documento do pedido específico (pelo ID) na coleção 'orders'.
+        const pedidoRef = this.collection.doc(pedidoId);
+
+        // Busca todos os documentos na subcoleção 'items' desse pedido.
+        // O 'withConverter' garante que cada item seja transformado em uma instância da classe OrderItem,
+        // permitindo o uso de seus métodos e lógica de inicialização.
+        const snapshot = await pedidoRef.collection("items").withConverter(orderItemConverter).get();
+
+        // Retorna a lista de itens do pedido, já como instâncias OrderItem.
         return snapshot.docs.map((doc) => doc.data());
     }
 }
