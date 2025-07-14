@@ -1,5 +1,5 @@
 import { CollectionReference, getFirestore } from "firebase-admin/firestore";
-import { Order, orderConverter, QueryParamsOrder } from "../models/order.model.js";
+import { Order, orderConverter, OrderStatus, QueryParamsOrder } from "../models/order.model.js";
 import dayjs from "dayjs";
 import { OrderItem, orderItemConverter } from "../models/order-item.model.js";
 import { NotFoundError } from "../errors/not-found.error.js";
@@ -91,5 +91,16 @@ export class OrderRepostitory {
         // adiciona novamente o array de items no pedido
         order.items = await this.getItems(pedidoId);
         return order;
+    }
+    async changeStatus(pedidoId: string, status: OrderStatus) {
+        // o set permite alterar apenas campos que forem passados contando se for passado o merge: true junto,
+        // caso o merge seja falso, ele substitui tudo
+        // precisa tirar o conveter porque estamos passando somente o status
+        await this.collection.withConverter(null).doc(pedidoId).set(
+            { status: status },
+            {
+                merge: true,
+            }
+        );
     }
 }

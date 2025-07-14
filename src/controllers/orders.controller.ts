@@ -27,4 +27,9 @@ export class OrdersController {
         const pedido = await new OrderService().getById(req.params.id);
         res.json(pedido);
     }
+
+    static async changeStatus(req: Request, res: Response) {
+        await new OrderService().changeStatus(req.params.id, req.body);
+        res.json({ message: `Status alterado com sucesso!` });
+    }
 }
