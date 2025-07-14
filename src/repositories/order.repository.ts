@@ -1,6 +1,7 @@
 import { CollectionReference, getFirestore } from "firebase-admin/firestore";
 import { Order, orderConverter, QueryParamsOrder } from "../models/order.model.js";
 import dayjs from "dayjs";
+import { orderItemConverter } from "../models/order-item.model.js";
 
 export class OrderRepostitory {
     private collection: CollectionReference<Order>;
@@ -10,7 +11,29 @@ export class OrderRepostitory {
     }
 
     async save(order: Order) {
-        await this.collection.add(order);
+        const batch = getFirestore().batch();
+
+        // Cabeçalho do pedido
+        const orderRef = this.collection.doc();
+        batch.create(orderRef, order);
+
+        // Itens do pedido
+        const itemsRef = orderRef.collection("items").withConverter(orderItemConverter);
+        for (let item of order.items) {
+            batch.create(itemsRef.doc(), item);
+        }
+
+        // caso tenha algum erro, ele não cria um novo order
+        await batch.commit();
+
+        /*
+        // cria uma referencia do documento order
+        const orderRef = await this.collection.add(order);
+        for (let item of order.items) {
+            // adiciona uma subcoleção items dentro de order pra cada item
+            await orderRef.collection("items").withConverter(orderItemConverter).add(item);
+        }
+            */
     }
 
     async search(queryParams: QueryParamsOrder): Promise<Order[]> {
