@@ -12,8 +12,8 @@ import { allowAnonymousUser } from "../middlewares/allow-anonymous-user.middlewa
 
 export const routes = (app: express.Express) => {
     app.use(express.json({ limit: "5mb" }));
-    app.use(allowAnonymousUser);
     app.use(authRoutes); // rota de autenticação de preferência em primeiro plano
+    app.use(allowAnonymousUser);
     app.use(userRoutes);
     app.use(companyRoutes);
     app.use(categoriesRoutes);
