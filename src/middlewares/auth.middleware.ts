@@ -3,12 +3,14 @@ import { UnauthorizedError } from "../errors/unauthorized.error.js";
 import { DecodedIdToken, getAuth } from "firebase-admin/auth";
 import { UserService } from "../services/user.service.js";
 import { ForbiddenError } from "../errors/forbidden.error.js";
+import { NotFoundError } from "../errors/not-found.error.js";
 
 export const auth = (app: express.Express) => {
     app.use(async (req: Request, res: Response, next: NextFunction) => {
         if (
             (req.method === "POST" && req.url.startsWith("/auth/login")) ||
-            (req.method === "POST" && req.url.startsWith("auth/recovery"))
+            (req.method === "POST" && req.url.startsWith("/auth/recovery")) ||
+            (req.method === "POST" && req.url.startsWith("/auth/signin"))
         ) {
             return next(); // se for um POST e a url começa com '/auth/login' passa para o próximo middlerare, que no caso é o routes(app)
         }
@@ -18,20 +20,21 @@ export const auth = (app: express.Express) => {
             try {
                 const decodedIdToken: DecodedIdToken = await getAuth().verifyIdToken(token, true);
 
-                const user = await new UserService().getById(decodedIdToken.uid);
-
-                //  com o usuário cadastrado (no banco de dados), as vezes pode lançar um token sem ter um usuario cadastrado
-
-                if (!user) {
-                    return next(new ForbiddenError());
+                if (decodedIdToken.firebase.sign_in_provider === "anonymous") {
+                    return next();
                 }
-                req.user = user;
+
+                // já lança um NotFoundError caso não tenha o usuário
+                req.user = await new UserService().getById(decodedIdToken.uid);
 
                 return next(); // deu certo, então passa para o próxim middleware, que no caso no index é o routes(app)
             } catch (error) {
-                console.log(error);
-
-                next(new UnauthorizedError()); // token inválido/revogado/expirado/ problema de verificação
+                if (error instanceof NotFoundError) {
+                    // usuário não existe
+                    return next(new ForbiddenError());
+                } else {
+                    return next(new UnauthorizedError()); // token inválido/revogado/expirado/ problema de verificação
+                }
             }
         }
         next(new UnauthorizedError("Token não foi enviado")); // quando o token não foi enviado

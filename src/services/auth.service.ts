@@ -6,6 +6,7 @@ import { FirebaseAuthError, getAuth, UpdateRequest, UserRecord } from "firebase-
 import {
     getAuth as getFirebaseAuth,
     sendPasswordResetEmail,
+    signInAnonymously,
     signInWithEmailAndPassword,
     UserCredential,
 } from "firebase/auth";
@@ -61,5 +62,9 @@ export class AuthService {
 
     async recovery(email: string) {
         await sendPasswordResetEmail(getFirebaseAuth(), email);
+    }
+
+    async signin(): Promise<UserCredential> {
+        return await signInAnonymously(getFirebaseAuth());
     }
 }

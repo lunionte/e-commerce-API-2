@@ -13,3 +13,6 @@ authRoutes.post(
     celebrate({ [Segments.BODY]: authRecoverySchema }),
     asyncHandler(AuthController.recovery)
 );
+
+// não vai ter nada no body porque quando der o post ele retorna o token automatico
+authRoutes.post("/auth/signin", asyncHandler(AuthController.signin));
