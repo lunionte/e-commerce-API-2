@@ -35,7 +35,7 @@ export class OrderService {
         }
         order.formaPagamento = formaPagamento;
 
-        for (let item of order.items!) {
+        for (const item of order.items!) {
             const produto = await this.productsRepository.getById(item.produto.id);
             if (!produto) {
                 throw new ValidationError("Produto não encontrado");

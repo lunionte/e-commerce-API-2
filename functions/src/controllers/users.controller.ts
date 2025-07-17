@@ -13,12 +13,12 @@ export class UsersController {
     }
 
     static async getById(req: Request, res: Response) {
-        let userId = req.params.id;
+        const userId = req.params.id;
         res.json(await new UserService().getById(userId));
     }
 
     static async save(req: Request, res: Response) {
-        let user = req.body;
+        const user = req.body;
         await new UserService().save(user);
         res.status(201).json({
             message: `Usuário criado com sucesso!`,
@@ -26,8 +26,8 @@ export class UsersController {
     }
 
     static async update(req: Request, res: Response) {
-        let userId = req.params.id;
-        let user = req.body as User;
+        const userId = req.params.id;
+        const user = req.body as User;
         await new UserService().update(userId, user);
         res.json({
             message: "Usuário alterado com sucesso!",
@@ -35,7 +35,7 @@ export class UsersController {
     }
 
     static async delete(req: Request, res: Response) {
-        let userId = req.params.id;
+        const userId = req.params.id;
         await new UserService().delete(userId);
         res.status(204).end();
     }
