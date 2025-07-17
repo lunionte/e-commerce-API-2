@@ -9,7 +9,8 @@
         "build:watch": "tsc --watch",
         "dev": "firebase emulators:start --only functions",
         "deploy": "npm run lint && npm run build && firebase deploy --only functions",
-        "logs": "firebase functions:log"
+        "logs": "firebase functions:log",
+        "swagger": "node swagger.js"
     },
     "engines": {
         "node": "20"
@@ -24,12 +25,14 @@
         "file-type": "^21.0.0",
         "firebase": "^11.8.1",
         "firebase-admin": "^13.4.0",
-        "firebase-functions": "^6.0.1"
+        "firebase-functions": "^6.0.1",
+        "swagger-ui-express": "^5.0.1"
     },
     "devDependencies": {
         "@eslint/js": "^9.31.0",
         "@types/express": "^5.0.2",
         "@types/node": "^20.19.8",
+        "@types/swagger-ui-express": "^4.1.8",
         "eslint": "^9.31.0",
         "firebase-functions-test": "^3.1.0",
         "swagger-autogen": "^2.23.7",
