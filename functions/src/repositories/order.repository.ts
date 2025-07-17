@@ -54,7 +54,7 @@ export class OrderRepostitory {
 
         if (queryParams.dataInicio) {
             // adiciona mais um dia na data, faz ela começar no inicio do dia (00:00) e no formato dd/mm/yyyy
-            queryParams.dataInicio = dayjs(queryParams.dataInicio).add(1, "day").startOf("day").toDate();
+            queryParams.dataInicio = dayjs(queryParams.dataInicio).startOf("day").toDate();
             query = query.where("data", ">=", queryParams.dataInicio);
         }
 
