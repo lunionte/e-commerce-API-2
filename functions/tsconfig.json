@@ -1,6 +1,12 @@
 {
-    "extends": "@tsconfig/node20/tsconfig.json",
     "compilerOptions": {
+        "module": "nodenext",
+        "target": "es2022",
+
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "moduleResolution": "node16",
         "rootDir": "src", // Diretório de códigos TypeScript
         "outDir": "lib", // Diretório de saída para os arquivos compilados
         "sourceMap": true, // Gera mapas de origem para facilitar o debug

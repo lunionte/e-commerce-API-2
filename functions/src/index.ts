@@ -5,6 +5,7 @@ import { routes } from "./routes/index.js";
 import { errorHandler } from "./middlewares/error-handler.middleware.js";
 import { pageNotFoundHandler } from "./middlewares/page-not-found.middleware.js";
 import { auth } from "./middlewares/auth.middleware.js";
+import { onRequest } from "firebase-functions/v1/https";
 
 // Passa o que o express vai usar
 // No routes(app) por exemplo, a função recebe app, que no routes/index, apenas guia falando para esse app usar o express.json() e o caminho das rotas
@@ -21,6 +22,4 @@ routes(app);
 pageNotFoundHandler(app);
 errorHandler(app);
 
-app.listen(3000, () => {
-    console.log("🟢 Servidor ativo na porta 3000 🟢 ");
-});
+export const api = onRequest(app);
