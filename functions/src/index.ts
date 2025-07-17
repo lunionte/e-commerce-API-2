@@ -6,6 +6,7 @@ import { errorHandler } from "./middlewares/error-handler.middleware.js";
 import { pageNotFoundHandler } from "./middlewares/page-not-found.middleware.js";
 import { auth } from "./middlewares/auth.middleware.js";
 import { onRequest } from "firebase-functions/v1/https";
+import { logsRoutes } from "./middlewares/logs.middleware.js";
 
 // Passa o que o express vai usar
 // No routes(app) por exemplo, a função recebe app, que no routes/index, apenas guia falando para esse app usar o express.json() e o caminho das rotas
@@ -17,6 +18,7 @@ initializeFirebaseApp({
 const app = express();
 
 // conseguir usar a autenticação | tem que vir antes das rotas
+logsRoutes(app);
 auth(app);
 routes(app);
 pageNotFoundHandler(app);
