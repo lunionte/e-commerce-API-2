@@ -1,4 +1,5 @@
 import { Joi } from "celebrate";
+import { validator } from "cpf-cnpj-validator";
 import { DocumentData, FirestoreDataConverter, QueryDocumentSnapshot } from "firebase-admin/firestore";
 
 export class Company {
@@ -28,14 +29,16 @@ export class Company {
         this.ativa = data.ativa ?? true;
     }
 }
+const cpfCnpjValidator = Joi.extend(validator);
 
 export const newCompanySchema = Joi.object({
     logomarca: Joi.alternatives()
         .try(Joi.string().base64().required(), Joi.string().uri().trim().required(), Joi.valid(null))
         .required(),
     cpfCnpj: Joi.alternatives()
-        .try(Joi.string().trim().length(11).required(), Joi.string().trim().length(14).required())
-        .required(),
+        .try(cpfCnpjValidator.document().cpf(), cpfCnpjValidator.document().cnpj())
+        .required()
+        .messages({ "alternatives.match": "CPF ou CPNJ inválidos" }),
     razaoSocial: Joi.string().uppercase().trim().required(),
     nomeFantasia: Joi.string().uppercase().trim().required(),
     telefone: Joi.string()
@@ -56,8 +59,9 @@ export const updateCompanySchema = Joi.object({
         )
         .required(),
     cpfCnpj: Joi.alternatives()
-        .try(Joi.string().trim().length(11).required(), Joi.string().trim().trim().length(14).required())
-        .required(),
+        .try(cpfCnpjValidator.document().cpf(), cpfCnpjValidator.document().cnpj())
+        .required()
+        .messages({ "alternatives.match": "CPF ou CPNJ inválidos" }),
     razaoSocial: Joi.string().uppercase().trim().required(),
     nomeFantasia: Joi.string().uppercase().trim().required(),
     telefone: Joi.string()
