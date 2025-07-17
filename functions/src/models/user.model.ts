@@ -31,7 +31,7 @@ export const updateUserSchema = Joi.object().keys({
 
 export const authLoginSchema = Joi.object().keys({
     email: Joi.string().trim().email().required(),
-    password: Joi.string().trim().min(6),
+    password: Joi.string().trim().min(6).required(),
 });
 
 export const authRecoverySchema = Joi.object().keys({
