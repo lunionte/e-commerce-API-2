@@ -8,7 +8,7 @@
         "build": "tsc",
         "build:watch": "tsc --watch",
         "dev": "firebase emulators:start --only functions",
-        "deploy": "npm run lint && npm run build && firebase deploy --only functions",
+        "deploy": "npm run lint && npm run swagger && npm run build && firebase deploy --only functions",
         "logs": "firebase functions:log",
         "swagger": "node swagger.js"
     },
