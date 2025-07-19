@@ -9,15 +9,40 @@
     {
       "url": "http://127.0.0.1:5001/api-ecommerce-351ee/us-central1/api",
       "description": "dev"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Autenticação de usuários"
     },
     {
-      "url": "https://us-central1-api-ecommerce-351ee.cloudfunctions.net/api",
-      "description": "prod"
+      "name": "Users",
+      "description": "Gestão de usuários"
+    },
+    {
+      "name": "Companies",
+      "description": "Gestão de empresas"
+    },
+    {
+      "name": "Categories",
+      "description": "Gestão de categorias de produtos"
+    },
+    {
+      "name": "Products",
+      "description": "Gestão de produtos"
+    },
+    {
+      "name": "Payment Methods",
+      "description": "Gestão de formas de pagamento"
     }
   ],
   "paths": {
     "/auth/login": {
       "post": {
+        "tags": [
+          "Auth"
+        ],
         "description": "",
         "responses": {
           "200": {
@@ -45,6 +70,9 @@
     },
     "/auth/recovery": {
       "post": {
+        "tags": [
+          "Auth"
+        ],
         "description": "",
         "responses": {
           "default": {
@@ -69,6 +97,9 @@
     },
     "/auth/signin": {
       "post": {
+        "tags": [
+          "Auth"
+        ],
         "description": "",
         "responses": {
           "200": {
@@ -79,6 +110,9 @@
     },
     "/users": {
       "get": {
+        "tags": [
+          "Users"
+        ],
         "description": "",
         "responses": {
           "200": {
@@ -87,6 +121,9 @@
         }
       },
       "post": {
+        "tags": [
+          "Users"
+        ],
         "description": "",
         "responses": {
           "201": {
@@ -97,6 +134,9 @@
     },
     "/users/{id}": {
       "get": {
+        "tags": [
+          "Users"
+        ],
         "description": "",
         "parameters": [
           {
@@ -115,6 +155,9 @@
         }
       },
       "put": {
+        "tags": [
+          "Users"
+        ],
         "description": "",
         "parameters": [
           {
@@ -133,6 +176,9 @@
         }
       },
       "delete": {
+        "tags": [
+          "Users"
+        ],
         "description": "",
         "parameters": [
           {
@@ -153,6 +199,9 @@
     },
     "/companies": {
       "get": {
+        "tags": [
+          "Companies"
+        ],
         "description": "",
         "responses": {
           "200": {
@@ -161,6 +210,9 @@
         }
       },
       "post": {
+        "tags": [
+          "Companies"
+        ],
         "description": "",
         "responses": {
           "201": {
@@ -171,6 +223,9 @@
     },
     "/companies/{id}": {
       "get": {
+        "tags": [
+          "Companies"
+        ],
         "description": "",
         "parameters": [
           {
@@ -189,6 +244,9 @@
         }
       },
       "put": {
+        "tags": [
+          "Companies"
+        ],
         "description": "",
         "parameters": [
           {
@@ -209,6 +267,9 @@
     },
     "/categories": {
       "get": {
+        "tags": [
+          "Categories"
+        ],
         "description": "",
         "responses": {
           "200": {
@@ -217,6 +278,9 @@
         }
       },
       "post": {
+        "tags": [
+          "Categories"
+        ],
         "description": "",
         "responses": {
           "201": {
@@ -227,6 +291,9 @@
     },
     "/categories/{id}": {
       "get": {
+        "tags": [
+          "Categories"
+        ],
         "description": "",
         "parameters": [
           {
@@ -245,6 +312,9 @@
         }
       },
       "put": {
+        "tags": [
+          "Categories"
+        ],
         "description": "",
         "parameters": [
           {
@@ -263,6 +333,9 @@
         }
       },
       "delete": {
+        "tags": [
+          "Categories"
+        ],
         "description": "",
         "parameters": [
           {
@@ -283,6 +356,9 @@
     },
     "/products": {
       "get": {
+        "tags": [
+          "Products"
+        ],
         "description": "",
         "responses": {
           "200": {
@@ -291,6 +367,9 @@
         }
       },
       "post": {
+        "tags": [
+          "Products"
+        ],
         "description": "",
         "responses": {
           "201": {
@@ -301,6 +380,9 @@
     },
     "/products/search": {
       "get": {
+        "tags": [
+          "Products"
+        ],
         "description": "",
         "parameters": [
           {
@@ -320,6 +402,9 @@
     },
     "/products/{id}": {
       "get": {
+        "tags": [
+          "Products"
+        ],
         "description": "",
         "parameters": [
           {
@@ -338,6 +423,9 @@
         }
       },
       "put": {
+        "tags": [
+          "Products"
+        ],
         "description": "",
         "parameters": [
           {
@@ -356,6 +444,9 @@
         }
       },
       "delete": {
+        "tags": [
+          "Products"
+        ],
         "description": "",
         "parameters": [
           {
@@ -376,6 +467,9 @@
     },
     "/payment-methods/": {
       "get": {
+        "tags": [
+          "Payment Methods"
+        ],
         "description": "",
         "responses": {
           "200": {
@@ -384,6 +478,9 @@
         }
       },
       "post": {
+        "tags": [
+          "Payment Methods"
+        ],
         "description": "",
         "responses": {
           "201": {
@@ -394,6 +491,9 @@
     },
     "/payment-methods/{id}": {
       "get": {
+        "tags": [
+          "Payment Methods"
+        ],
         "description": "",
         "parameters": [
           {
@@ -412,6 +512,9 @@
         }
       },
       "put": {
+        "tags": [
+          "Payment Methods"
+        ],
         "description": "",
         "parameters": [
           {
@@ -430,6 +533,9 @@
         }
       },
       "delete": {
+        "tags": [
+          "Payment Methods"
+        ],
         "description": "",
         "parameters": [
           {
@@ -450,6 +556,9 @@
     },
     "/orders": {
       "post": {
+        "tags": [
+          "Orders"
+        ],
         "description": "",
         "responses": {
           "201": {
@@ -458,6 +567,9 @@
         }
       },
       "get": {
+        "tags": [
+          "Orders"
+        ],
         "description": "",
         "responses": {
           "200": {
@@ -468,6 +580,9 @@
     },
     "/orders/{id}/items": {
       "get": {
+        "tags": [
+          "Orders"
+        ],
         "description": "",
         "parameters": [
           {
@@ -488,6 +603,9 @@
     },
     "/orders/{id}/": {
       "get": {
+        "tags": [
+          "Orders"
+        ],
         "description": "",
         "parameters": [
           {
@@ -508,6 +626,9 @@
     },
     "/orders/{id}/status": {
       "post": {
+        "tags": [
+          "Orders"
+        ],
         "description": "",
         "parameters": [
           {

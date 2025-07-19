@@ -9,15 +9,21 @@ import { CompanyService } from "../services/company.service.js";
 
 export class CompaniesController {
     static async getAll(req: Request, res: Response) {
+        // #swagger.tags = ['Companies']
+
         res.json(await new CompanyService().getAll());
     }
 
     static async getById(req: Request, res: Response) {
+        // #swagger.tags = ['Companies']
+
         const companyId = req.params.id;
         res.json(await new CompanyService().getById(companyId));
     }
 
     static async save(req: Request, res: Response) {
+        // #swagger.tags = ['Companies']
+
         const company = req.body;
         await new CompanyService().save(company);
         res.status(201).json({
@@ -26,6 +32,8 @@ export class CompaniesController {
     }
 
     static async update(req: Request, res: Response) {
+        // #swagger.tags = ['Companies']
+
         const companyId = req.params.id;
         const company = req.body as Company;
         await new CompanyService().update(companyId, company);

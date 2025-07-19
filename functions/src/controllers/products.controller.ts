@@ -4,10 +4,14 @@ import { Product } from "../models/product.model.js";
 
 export class ProductsController {
     static async getAll(req: Request, res: Response) {
+        // #swagger.tags = ['Products']
+
         res.json(await new ProductsService().getAll());
     }
 
     static async search(req: Request, res: Response) {
+        // #swagger.tags = ['Products']
+
         const categoryId = req.query.categoryId as string;
         const product = await new ProductsService().search(categoryId);
 
@@ -15,11 +19,15 @@ export class ProductsController {
     }
 
     static async getById(req: Request, res: Response) {
+        // #swagger.tags = ['Products']
+
         const id = req.params.id;
         res.json(await new ProductsService().getById(id));
     }
 
     static async save(req: Request, res: Response) {
+        // #swagger.tags = ['Products']
+
         const product = req.body as Product;
 
         await new ProductsService().save(product);
@@ -30,6 +38,8 @@ export class ProductsController {
     }
 
     static async update(req: Request, res: Response) {
+        // #swagger.tags = ['Products']
+
         const id = req.params.id;
         const product = req.body as Product;
 
@@ -39,6 +49,8 @@ export class ProductsController {
     }
 
     static async delete(req: Request, res: Response) {
+        // #swagger.tags = ['Products']
+
         const id = req.params.id;
 
         await new ProductsService().delete(id);

@@ -12,6 +12,15 @@ const doc = {
             description: "dev",
         },
     ],
+    tags: [
+        { name: "Auth", description: "Autenticação de usuários" },
+        { name: "Users", description: "Gestão de usuários" },
+        { name: "Companies", description: "Gestão de empresas" },
+        { name: "Categories", description: "Gestão de categorias de produtos" },
+        { name: "Products", description: "Gestão de produtos" },
+        { name: "Payment Methods", description: "Gestão de formas de pagamento" },
+        { name: "Orders", description: "Gestão de pedidos" },
+    ],
 };
 
 const outputFile = "./src/docs/swagger-output.json";
