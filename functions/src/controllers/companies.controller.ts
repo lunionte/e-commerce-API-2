@@ -10,12 +10,16 @@ import { CompanyService } from "../services/company.service.js";
 export class CompaniesController {
     static async getAll(req: Request, res: Response) {
         // #swagger.tags = ['Companies']
+        // #swagger.summary = Listagem de empresas
+        // #swagger.description = 'Retorna todas as empresas disponíveis no sistema.'
 
         res.json(await new CompanyService().getAll());
     }
 
     static async getById(req: Request, res: Response) {
         // #swagger.tags = ['Companies']
+        // #swagger.summary = Detalhes da empresa
+        // swagger.description = 'Retorna os detalhes da empresa especificada pelo ID.'
 
         const companyId = req.params.id;
         res.json(await new CompanyService().getById(companyId));
@@ -23,6 +27,18 @@ export class CompaniesController {
 
     static async save(req: Request, res: Response) {
         // #swagger.tags = ['Companies']
+        // #swagger.summary = Criação de empresa
+        // #swagger.description = 'Cria uma nova empresa no sistema.'
+        /* #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: {
+                        $ref: "#/components/schemas/addCompany"
+                    }
+                }
+            }
+        } */
 
         const company = req.body;
         await new CompanyService().save(company);
@@ -33,6 +49,8 @@ export class CompaniesController {
 
     static async update(req: Request, res: Response) {
         // #swagger.tags = ['Companies']
+        // #swagger.summary = Atualização de empresa
+        // #swagger.description = 'Atualiza os dados da empresa especificada pelo ID.'
 
         const companyId = req.params.id;
         const company = req.body as Company;

@@ -35,6 +35,10 @@
     {
       "name": "Payment Methods",
       "description": "Gestão de formas de pagamento"
+    },
+    {
+      "name": "Orders",
+      "description": "Gestão de pedidos"
     }
   ],
   "paths": {
@@ -43,7 +47,8 @@
         "tags": [
           "Auth"
         ],
-        "description": "",
+        "summary": "Autenticação de usuários e autenticadores",
+        "description": "Realiza o login do usuário com email e senha, retornando um token de autenticação.",
         "responses": {
           "200": {
             "description": "OK"
@@ -73,7 +78,8 @@
         "tags": [
           "Auth"
         ],
-        "description": "",
+        "summary": "Recuperação de senha",
+        "description": "Inicia o processo de recuperação de senha para o usuário com o email fornecido.",
         "responses": {
           "default": {
             "description": ""
@@ -100,7 +106,8 @@
         "tags": [
           "Auth"
         ],
-        "description": "",
+        "summary": "Registro de usuários",
+        "description": "Registra um novo usuário e retorna um token de autenticação.",
         "responses": {
           "200": {
             "description": "OK"
@@ -113,21 +120,43 @@
         "tags": [
           "Users"
         ],
-        "description": "",
+        "summary": "Listagem de usuários",
+        "description": "Retorna todos os usuários disponíveis no sistema.",
         "responses": {
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "post": {
         "tags": [
           "Users"
         ],
-        "description": "",
+        "summary": "Criação de usuário",
+        "description": "Cria um novo usuário no sistema.",
         "responses": {
           "201": {
             "description": "Created"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/addUser"
+              }
+            }
           }
         }
       }
@@ -137,7 +166,8 @@
         "tags": [
           "Users"
         ],
-        "description": "",
+        "summary": "Detalhes do usuário",
+        "description": "Retorna os detalhes do usuário especificado pelo ID.",
         "parameters": [
           {
             "name": "id",
@@ -152,13 +182,19 @@
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "put": {
         "tags": [
           "Users"
         ],
-        "description": "",
+        "summary": "Atualização de usuário",
+        "description": "Atualiza os dados do usuário especificado pelo ID.",
         "parameters": [
           {
             "name": "id",
@@ -173,13 +209,19 @@
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "delete": {
         "tags": [
           "Users"
         ],
-        "description": "",
+        "summary": "Exclusão de usuário",
+        "description": "Exclui o usuário especificado pelo ID.",
         "parameters": [
           {
             "name": "id",
@@ -194,7 +236,12 @@
           "204": {
             "description": "No Content"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/companies": {
@@ -202,21 +249,43 @@
         "tags": [
           "Companies"
         ],
-        "description": "",
+        "summary": "Listagem de empresas",
+        "description": "Retorna todas as empresas disponíveis no sistema.",
         "responses": {
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "post": {
         "tags": [
           "Companies"
         ],
-        "description": "",
+        "summary": "Criação de empresa",
+        "description": "Cria uma nova empresa no sistema.",
         "responses": {
           "201": {
             "description": "Created"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/addCompany"
+              }
+            }
           }
         }
       }
@@ -226,6 +295,7 @@
         "tags": [
           "Companies"
         ],
+        "summary": "Detalhes da empresa",
         "description": "",
         "parameters": [
           {
@@ -241,13 +311,19 @@
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "put": {
         "tags": [
           "Companies"
         ],
-        "description": "",
+        "summary": "Atualização de empresa",
+        "description": "Atualiza os dados da empresa especificada pelo ID.",
         "parameters": [
           {
             "name": "id",
@@ -262,7 +338,12 @@
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/categories": {
@@ -270,21 +351,43 @@
         "tags": [
           "Categories"
         ],
-        "description": "",
+        "summary": "Listagem de categorias",
+        "description": "Retorna todas as categorias disponíveis no sistema.",
         "responses": {
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "post": {
         "tags": [
           "Categories"
         ],
-        "description": "",
+        "summary": "Criação de categoria",
+        "description": "Cria uma nova categoria no sistema.",
         "responses": {
           "201": {
             "description": "Created"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/addCategory"
+              }
+            }
           }
         }
       }
@@ -294,7 +397,8 @@
         "tags": [
           "Categories"
         ],
-        "description": "",
+        "summary": "Detalhes da categoria",
+        "description": "Retorna os detalhes da categoria especificada pelo ID.",
         "parameters": [
           {
             "name": "id",
@@ -309,13 +413,19 @@
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "put": {
         "tags": [
           "Categories"
         ],
-        "description": "",
+        "summary": "Atualização de categoria",
+        "description": "Atualiza os dados da categoria especificada pelo ID.",
         "parameters": [
           {
             "name": "id",
@@ -330,7 +440,12 @@
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -351,7 +466,12 @@
           "204": {
             "description": "No Content"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/products": {
@@ -359,21 +479,43 @@
         "tags": [
           "Products"
         ],
-        "description": "",
+        "summary": "Listagem de produtos",
+        "description": "Retorna todos os produtos disponíveis no sistema.",
         "responses": {
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "post": {
         "tags": [
           "Products"
         ],
-        "description": "",
+        "summary": "Criação de produto",
+        "description": "Cria um novo produto no sistema.",
         "responses": {
           "201": {
             "description": "Created"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/addProduct"
+              }
+            }
           }
         }
       }
@@ -383,7 +525,8 @@
         "tags": [
           "Products"
         ],
-        "description": "",
+        "summary": "Busca de produtos",
+        "description": "Retorna os produtos filtrados pela categoria especificada.",
         "parameters": [
           {
             "name": "categoryId",
@@ -397,7 +540,12 @@
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/products/{id}": {
@@ -405,7 +553,8 @@
         "tags": [
           "Products"
         ],
-        "description": "",
+        "summary": "Detalhes do produto",
+        "description": "Retorna os detalhes do produto especificado pelo ID.",
         "parameters": [
           {
             "name": "id",
@@ -420,13 +569,19 @@
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "put": {
         "tags": [
           "Products"
         ],
-        "description": "",
+        "summary": "Atualização de produto",
+        "description": "Atualiza os dados do produto especificado pelo ID.",
         "parameters": [
           {
             "name": "id",
@@ -441,13 +596,19 @@
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "delete": {
         "tags": [
           "Products"
         ],
-        "description": "",
+        "summary": "Exclusão de produto",
+        "description": "Exclui o produto especificado pelo ID.",
         "parameters": [
           {
             "name": "id",
@@ -462,7 +623,12 @@
           "204": {
             "description": "No Content"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/payment-methods/": {
@@ -470,21 +636,43 @@
         "tags": [
           "Payment Methods"
         ],
-        "description": "",
+        "summary": "Listagem de métodos de pagamento",
+        "description": "Retorna todos os métodos de pagamento disponíveis no sistema.",
         "responses": {
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "post": {
         "tags": [
           "Payment Methods"
         ],
-        "description": "",
+        "summary": "Criação de método de pagamento",
+        "description": "Cria um novo método de pagamento no sistema.",
         "responses": {
           "201": {
             "description": "Created"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/addPaymentMethod"
+              }
+            }
           }
         }
       }
@@ -494,7 +682,8 @@
         "tags": [
           "Payment Methods"
         ],
-        "description": "",
+        "summary": "Detalhes do método de pagamento",
+        "description": "Retorna os detalhes do método de pagamento especificado pelo ID.",
         "parameters": [
           {
             "name": "id",
@@ -509,13 +698,19 @@
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "put": {
         "tags": [
           "Payment Methods"
         ],
-        "description": "",
+        "summary": "Atualização de método de pagamento",
+        "description": "Atualiza os dados do método de pagamento especificado pelo ID.",
         "parameters": [
           {
             "name": "id",
@@ -530,13 +725,19 @@
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "delete": {
         "tags": [
           "Payment Methods"
         ],
-        "description": "",
+        "summary": "Exclusão de método de pagamento",
+        "description": "Exclui o método de pagamento especificado pelo ID.",
         "parameters": [
           {
             "name": "id",
@@ -551,7 +752,12 @@
           "204": {
             "description": "No Content"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/orders": {
@@ -559,10 +765,26 @@
         "tags": [
           "Orders"
         ],
-        "description": "",
+        "summary": "Criação de pedido",
+        "description": "Cria um novo pedido no sistema.",
         "responses": {
           "201": {
             "description": "Created"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/addOrder"
+              }
+            }
           }
         }
       },
@@ -570,12 +792,18 @@
         "tags": [
           "Orders"
         ],
+        "summary": "Listagem de pedidos",
         "description": "",
         "responses": {
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/orders/{id}/items": {
@@ -583,7 +811,8 @@
         "tags": [
           "Orders"
         ],
-        "description": "",
+        "summary": "Itens do pedido",
+        "description": "Retorna os itens do pedido especificado pelo ID.",
         "parameters": [
           {
             "name": "id",
@@ -598,7 +827,12 @@
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/orders/{id}/": {
@@ -606,7 +840,8 @@
         "tags": [
           "Orders"
         ],
-        "description": "",
+        "summary": "Detalhes do pedido",
+        "description": "Retorna os detalhes do pedido especificado pelo ID.",
         "parameters": [
           {
             "name": "id",
@@ -621,7 +856,12 @@
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/orders/{id}/status": {
@@ -629,7 +869,8 @@
         "tags": [
           "Orders"
         ],
-        "description": "",
+        "summary": "Alteração de status do pedido",
+        "description": "Altera o status do pedido especificado pelo ID.",
         "parameters": [
           {
             "name": "id",
@@ -644,7 +885,219 @@
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "addUser": {
+        "type": "object",
+        "properties": {
+          "nome": {
+            "type": "string",
+            "example": "Dynkas"
+          },
+          "email": {
+            "type": "string",
+            "example": "dynkasdoido123@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "123456"
+          }
+        },
+        "required": [
+          "nome",
+          "email",
+          "password"
+        ]
+      },
+      "addCompany": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Empresa Exemplo"
+          },
+          "cnpj": {
+            "type": "string",
+            "example": "12345678000195"
+          },
+          "email": {
+            "type": "string",
+            "example": "empresa@exemplo.com"
+          },
+          "phone": {
+            "type": "string",
+            "example": "11999999999"
+          },
+          "address": {
+            "type": "object",
+            "properties": {
+              "street": {
+                "type": "string",
+                "example": "Rua Exemplo"
+              },
+              "number": {
+                "type": "string",
+                "example": "123"
+              },
+              "complement": {
+                "type": "string",
+                "example": "Apto 456"
+              },
+              "district": {
+                "type": "string",
+                "example": "Bairro Exemplo"
+              },
+              "city": {
+                "type": "string",
+                "example": "Cidade Exemplo"
+              },
+              "state": {
+                "type": "string",
+                "example": "SP"
+              },
+              "zipCode": {
+                "type": "string",
+                "example": "12345678"
+              }
+            },
+            "required": [
+              "street",
+              "number",
+              "complement",
+              "district",
+              "city",
+              "state",
+              "zipCode"
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "cnpj",
+          "email",
+          "phone",
+          "address"
+        ]
+      },
+      "addCategory": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Categoria Exemplo"
+          },
+          "description": {
+            "type": "string",
+            "example": "Descrição da categoria exemplo"
+          }
+        },
+        "required": [
+          "name",
+          "description"
+        ]
+      },
+      "addProduct": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Produto Exemplo"
+          },
+          "description": {
+            "type": "string",
+            "example": "Descrição do produto exemplo"
+          },
+          "price": {
+            "type": "number",
+            "example": 99.99
+          },
+          "quantity": {
+            "type": "number",
+            "example": 10
+          },
+          "categoryId": {
+            "type": "string",
+            "example": "1234567890abcdef12345678"
+          }
+        },
+        "required": [
+          "name",
+          "description",
+          "price",
+          "quantity",
+          "categoryId"
+        ]
+      },
+      "addPaymentMethod": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Cartão de Crédito"
+          },
+          "description": {
+            "type": "string",
+            "example": "Pagamento via cartão de crédito"
+          }
+        },
+        "required": [
+          "name",
+          "description"
+        ]
+      },
+      "addOrder": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "example": "1234567890abcdef12345678"
+          },
+          "companyId": {
+            "type": "string",
+            "example": "1234567890abcdef12345678"
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "productId": {
+                  "type": "string",
+                  "example": "1234567890abcdef12345678"
+                },
+                "quantity": {
+                  "type": "number",
+                  "example": 2
+                }
+              }
+            }
+          },
+          "totalPrice": {
+            "type": "number",
+            "example": 199.98
+          }
+        },
+        "required": [
+          "userId",
+          "companyId",
+          "products",
+          "totalPrice"
+        ]
       }
     }
   }

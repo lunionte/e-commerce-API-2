@@ -14,10 +14,16 @@ export const routes = (app: express.Express) => {
     app.use(express.json({ limit: "5mb" }));
     app.use(authRoutes); // rota de autenticação de preferência em primeiro plano
     app.use(allowAnonymousUser);
-    app.use(userRoutes);
-    app.use(companyRoutes);
-    app.use(categoriesRoutes);
-    app.use(productsRoutes);
-    app.use(paymentMethodRoutes);
-    app.use(orderRoutes);
+
+    const autenticatedRoutes = express.Router();
+    autenticatedRoutes.use(userRoutes);
+    autenticatedRoutes.use(companyRoutes);
+    autenticatedRoutes.use(categoriesRoutes);
+    autenticatedRoutes.use(productsRoutes);
+    autenticatedRoutes.use(paymentMethodRoutes);
+    autenticatedRoutes.use(orderRoutes);
+    app.use(
+        // #swagger.security = [{"bearerAuth": []}]
+        autenticatedRoutes
+    );
 };

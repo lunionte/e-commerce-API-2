@@ -12,6 +12,62 @@ const doc = {
             description: "dev",
         },
     ],
+    components: {
+        securitySchemes: {
+            bearerAuth: {
+                type: "http",
+                scheme: "bearer",
+            },
+        },
+        schemas: {
+            addUser: {
+                $nome: "Dynkas",
+                $email: "dynkasdoido123@gmail.com",
+                $password: "123456",
+            },
+            addCompany: {
+                $name: "Empresa Exemplo",
+                $cnpj: "12345678000195",
+                $email: "empresa@exemplo.com",
+                $phone: "11999999999",
+                $address: {
+                    $street: "Rua Exemplo",
+                    $number: "123",
+                    $complement: "Apto 456",
+                    $district: "Bairro Exemplo",
+                    $city: "Cidade Exemplo",
+                    $state: "SP",
+                    $zipCode: "12345678",
+                },
+            },
+            addCategory: {
+                $name: "Categoria Exemplo",
+                $description: "Descrição da categoria exemplo",
+            },
+            addProduct: {
+                $name: "Produto Exemplo",
+                $description: "Descrição do produto exemplo",
+                $price: 99.99,
+                $quantity: 10,
+                $categoryId: "1234567890abcdef12345678", // ID da categoria
+            },
+            addPaymentMethod: {
+                $name: "Cartão de Crédito",
+                $description: "Pagamento via cartão de crédito",
+            },
+            addOrder: {
+                $userId: "1234567890abcdef12345678", // ID do usuário
+                $companyId: "1234567890abcdef12345678", // ID da empresa
+                $products: [
+                    {
+                        productId: "1234567890abcdef12345678", // ID do produto
+                        quantity: 2,
+                    },
+                ],
+                $totalPrice: 199.98,
+            },
+        },
+    },
     tags: [
         { name: "Auth", description: "Autenticação de usuários" },
         { name: "Users", description: "Gestão de usuários" },

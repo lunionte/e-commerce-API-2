@@ -21,7 +21,7 @@ const app = express();
 // conseguir usar a autenticação | tem que vir antes das rotas
 swaggerDocs(app);
 logsRoutes(app);
-auth(app);
+auth(app); // middleware de autenticação que verifica se o usuário está autenticado antes de acessar as rotas
 routes(app);
 pageNotFoundHandler(app);
 errorHandler(app);

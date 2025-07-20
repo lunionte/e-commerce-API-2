@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { ForbiddenError } from "../errors/forbidden.error.js";
 
 export const allowAnonymousUser = (req: Request, res: Response, next: NextFunction) => {
+    // como essa rota vem depois do middleware auth(app), caso o usuário já esteja logado da um next() entrando nas rotas
     if (req.user) {
         return next();
     }

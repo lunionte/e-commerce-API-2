@@ -6,12 +6,16 @@ import { CategoriesService } from "../services/categories.service.js";
 export class CategoriesController {
     static async getAll(req: Request, res: Response) {
         // #swagger.tags = ['Categories']
+        // #swagger.summary = Listagem de categorias
+        // #swagger.description = 'Retorna todas as categorias disponíveis no sistema.'
 
         res.json(await new CategoriesService().getAll());
     }
 
     static async getById(req: Request, res: Response) {
         // #swagger.tags = ['Categories']
+        // #swagger.summary = Detalhes da categoria
+        // #swagger.description = 'Retorna os detalhes da categoria especificada pelo ID.'
 
         const categoryId = req.params.id;
         res.json(await new CategoriesService().getById(categoryId));
@@ -19,6 +23,18 @@ export class CategoriesController {
 
     static async save(req: Request, res: Response) {
         // #swagger.tags = ['Categories']
+        // #swagger.summary = Criação de categoria
+        // #swagger.description = 'Cria uma nova categoria no sistema.'
+        /* #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: {
+                        $ref: "#/components/schemas/addCategory"
+                    }
+                }
+            }
+        } */
 
         const category = req.body;
         await new CategoriesService().save(category);
@@ -27,6 +43,8 @@ export class CategoriesController {
 
     static async update(req: Request, res: Response) {
         // #swagger.tags = ['Categories']
+        // #swagger.summary = Atualização de categoria
+        // #swagger.description = 'Atualiza os dados da categoria especificada pelo ID.'
 
         const categoryId = req.params.id;
         const category = req.body;

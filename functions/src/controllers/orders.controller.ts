@@ -5,6 +5,18 @@ import { Order, QueryParamsOrder } from "../models/order.model.js";
 export class OrdersController {
     static async save(req: Request, res: Response) {
         // #swagger.tags = ['Orders']
+        // #swagger.summary = Criação de pedido
+        // #swagger.description = 'Cria um novo pedido no sistema.'
+        /* #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: {
+                        $ref: "#/components/schemas/addOrder"
+                    }
+                }
+            }
+        } */
 
         // cria uma nova instância da classe Order, inicializando-a com os dados já validados do req.body
         // possibilita usar os metodos de Order, como o getTotal
@@ -17,7 +29,8 @@ export class OrdersController {
     // faz o papel de getAll e search por query params
     static async search(req: Request, res: Response) {
         // #swagger.tags = ['Orders']
-
+        // #swagger.summary = Listagem de pedidos
+        // swagger.description = 'Retorna todos os pedidos ou filtra por parâmetros específicos.'
         const orders = await new OrderService().search(req.query as QueryParamsOrder);
 
         res.json(orders);
@@ -25,12 +38,16 @@ export class OrdersController {
 
     static async getItems(req: Request, res: Response) {
         // #swagger.tags = ['Orders']
+        // #swagger.summary = Itens do pedido
+        // #swagger.description = 'Retorna os itens do pedido especificado pelo ID.'
 
         const items = await new OrderService().getItems(req.params.id);
         res.json(items);
     }
     static async getById(req: Request, res: Response) {
         // #swagger.tags = ['Orders']
+        // #swagger.summary = Detalhes do pedido
+        // #swagger.description = 'Retorna os detalhes do pedido especificado pelo ID.'
 
         const pedido = await new OrderService().getById(req.params.id);
         res.json(pedido);
@@ -38,6 +55,8 @@ export class OrdersController {
 
     static async changeStatus(req: Request, res: Response) {
         // #swagger.tags = ['Orders']
+        // #swagger.summary = Alteração de status do pedido
+        // #swagger.description = 'Altera o status do pedido especificado pelo ID.'
 
         await new OrderService().changeStatus(req.params.id, req.body);
         res.json({ message: `Status alterado com sucesso!` });
