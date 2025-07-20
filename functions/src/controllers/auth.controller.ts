@@ -6,6 +6,16 @@ export class AuthController {
         // #swagger.tags = ['Auth']
         // #swagger.summary = Autenticação de usuários e autenticadores
         // #swagger.description = 'Realiza o login do usuário com email e senha, retornando um token de autenticação.'
+        /* #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: {
+                        $ref: "#/components/schemas/authenticate"
+                    }
+                }
+            }
+        } */
 
         const { email, password } = req.body;
         const userRecord = await new AuthService().login(email, password);

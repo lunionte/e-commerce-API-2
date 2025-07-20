@@ -19,10 +19,11 @@ const doc = {
                 scheme: "bearer",
             },
         },
+
         schemas: {
             addUser: {
-                $nome: "Dynkas",
-                $email: "dynkasdoido123@gmail.com",
+                $nome: "Carter",
+                $email: "chthug3@gmail.com",
                 $password: "123456",
             },
             addCompany: {
@@ -39,6 +40,10 @@ const doc = {
                     $state: "SP",
                     $zipCode: "12345678",
                 },
+            },
+            authenticate: {
+                $email: "chthug3@gmail.com",
+                password: "123456",
             },
             addCategory: {
                 $name: "Categoria Exemplo",
@@ -65,6 +70,51 @@ const doc = {
                     },
                 ],
                 $totalPrice: 199.98,
+                $paymentMethodId: "1234567890abcdef12345678", // ID do método de pagamento
+                $status: {
+                    "@enum": ["PENDING", null],
+                }, // Status do pedido
+                observacoes: null,
+            },
+            updateOrderStatus: {
+                $status: {
+                    "@enum": ["APROVADO", "ENTREGA", "CONCLUIDO", "CANCELADO"],
+                },
+            },
+        },
+        parameters: {
+            empresaId: {
+                name: "empresaId",
+                in: "query",
+                description: "Id da empresa",
+                schema: {
+                    type: "string",
+                },
+            },
+            dataInicio: {
+                name: "dataInicio",
+                in: "query",
+                description: "Data de início do filtro no formato YYYY-MM-DD",
+                scheme: {
+                    type: "date",
+                },
+            },
+            dataFim: {
+                name: "dataFim",
+                description: "Data de fim do filtro no formato YYYY-MM-DD",
+                schema: {
+                    type: "date",
+                },
+            },
+            orderStatus: {
+                name: "status",
+                in: "query",
+                description: "Status do pedido",
+                type: "string",
+                schema: {
+                    type: "string",
+                    enum: ["PENDENTE", "APROVADO", "ENTREGA", "CONCLUIDO", "CANCELADO"],
+                },
             },
         },
     },

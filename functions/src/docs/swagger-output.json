@@ -55,18 +55,11 @@
           }
         },
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "email": {
-                    "example": "any"
-                  },
-                  "password": {
-                    "example": "any"
-                  }
-                }
+                "$ref": "#/components/schemas/authenticate"
               }
             }
           }
@@ -794,6 +787,20 @@
         ],
         "summary": "Listagem de pedidos",
         "description": "",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/empresaId"
+          },
+          {
+            "$ref": "#/components/parameters/dataInicio"
+          },
+          {
+            "$ref": "#/components/parameters/dataFim"
+          },
+          {
+            "$ref": "#/components/parameters/orderStatus"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -890,7 +897,17 @@
           {
             "bearerAuth": []
           }
-        ]
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateOrderStatus"
+              }
+            }
+          }
+        }
       }
     }
   },
@@ -907,11 +924,11 @@
         "properties": {
           "nome": {
             "type": "string",
-            "example": "Dynkas"
+            "example": "Carter"
           },
           "email": {
             "type": "string",
-            "example": "dynkasdoido123@gmail.com"
+            "example": "chthug3@gmail.com"
           },
           "password": {
             "type": "string",
@@ -992,6 +1009,22 @@
           "email",
           "phone",
           "address"
+        ]
+      },
+      "authenticate": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "chthug3@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "123456"
+          }
+        },
+        "required": [
+          "email"
         ]
       },
       "addCategory": {
@@ -1090,14 +1123,86 @@
           "totalPrice": {
             "type": "number",
             "example": 199.98
-          }
+          },
+          "paymentMethodId": {
+            "type": "string",
+            "example": "1234567890abcdef12345678"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              null
+            ]
+          },
+          "observacoes": {}
         },
         "required": [
           "userId",
           "companyId",
           "products",
-          "totalPrice"
+          "totalPrice",
+          "paymentMethodId",
+          "status"
         ]
+      },
+      "updateOrderStatus": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "APROVADO",
+              "ENTREGA",
+              "CONCLUIDO",
+              "CANCELADO"
+            ]
+          }
+        },
+        "required": [
+          "status"
+        ]
+      }
+    },
+    "parameters": {
+      "empresaId": {
+        "name": "empresaId",
+        "in": "query",
+        "description": "Id da empresa",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "dataInicio": {
+        "name": "dataInicio",
+        "in": "query",
+        "description": "Data de início do filtro no formato YYYY-MM-DD",
+        "scheme": {
+          "type": "date"
+        }
+      },
+      "dataFim": {
+        "name": "dataFim",
+        "description": "Data de fim do filtro no formato YYYY-MM-DD",
+        "schema": {
+          "type": "date"
+        }
+      },
+      "orderStatus": {
+        "name": "status",
+        "in": "query",
+        "description": "Status do pedido",
+        "type": "string",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "PENDENTE",
+            "APROVADO",
+            "ENTREGA",
+            "CONCLUIDO",
+            "CANCELADO"
+          ]
+        }
       }
     }
   }

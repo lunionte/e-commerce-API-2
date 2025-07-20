@@ -31,6 +31,23 @@ export class OrdersController {
         // #swagger.tags = ['Orders']
         // #swagger.summary = Listagem de pedidos
         // swagger.description = 'Retorna todos os pedidos ou filtra por parâmetros específicos.'
+        /* 
+        #swagger.parameters['empresaId'] = {
+        $ref: "#/components/parameters/empresaId"
+        }
+
+        #swagger.parameters['dataInicio'] = {
+        $ref: "#/components/parameters/dataInicio"
+        }
+
+        #swagger.parameters['dataFim'] = {
+        $ref: "#/components/parameters/dataFim"
+        }
+
+        #swagger.parameters['status'] = {
+        $ref: "#/components/parameters/orderStatus"
+        }
+*/
         const orders = await new OrderService().search(req.query as QueryParamsOrder);
 
         res.json(orders);
@@ -57,6 +74,16 @@ export class OrdersController {
         // #swagger.tags = ['Orders']
         // #swagger.summary = Alteração de status do pedido
         // #swagger.description = 'Altera o status do pedido especificado pelo ID.'
+        /* #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: {
+                        $ref: "#/components/schemas/updateOrderStatus"
+                    }
+                }
+            }
+        } */
 
         await new OrderService().changeStatus(req.params.id, req.body);
         res.json({ message: `Status alterado com sucesso!` });
