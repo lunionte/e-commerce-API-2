@@ -51,6 +51,16 @@ export class CompaniesController {
         // #swagger.tags = ['Companies']
         // #swagger.summary = Atualização de empresa
         // #swagger.description = 'Atualiza os dados da empresa especificada pelo ID.'
+        /* #swagger.requestBody = {
+             required: true,
+             content: {
+                 "application/json": {
+                     schema: {
+                         $ref: "#/components/schemas/updateCompany"
+                     }
+                 }
+             }
+         } */
 
         const companyId = req.params.id;
         const company = req.body as Company;

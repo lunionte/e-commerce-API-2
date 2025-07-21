@@ -46,6 +46,16 @@ export class PaymentMethodController {
         // #swagger.tags = ['Payment Methods']
         // #swagger.summary = Atualização de método de pagamento
         // ##swagger.description = 'Atualiza os dados do método de pagamento especificado pelo ID.'
+        /* #swagger.requestBody = {
+             required: true,
+             content: {
+                 "application/json": {
+                     schema: {
+                         $ref: "#/components/schemas/updatePaymentMethod"
+                     }
+                 }
+             }
+         } */
 
         const id = req.params.id;
         const paymentMethod = req.body as PaymentMethod;

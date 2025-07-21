@@ -27,19 +27,16 @@ const doc = {
                 $password: "123456",
             },
             addCompany: {
-                $name: "Empresa Exemplo",
+                $logomarca: "base64string",
                 $cnpj: "12345678000195",
-                $email: "empresa@exemplo.com",
-                $phone: "11999999999",
-                $address: {
-                    $street: "Rua Exemplo",
-                    $number: "123",
-                    $complement: "Apto 456",
-                    $district: "Bairro Exemplo",
-                    $city: "Cidade Exemplo",
-                    $state: "SP",
-                    $zipCode: "12345678",
-                },
+                $razaoSocial: "Empresa Exemplo LTDA",
+                $nomeFantasia: "Empresa Exemplo",
+                telefone: "11999999999",
+                horarioFuncionamento: "08:00 - 18:00",
+                endereco: "rua exemplo, 123",
+                localizacao: "77.123456, -46.123456",
+                taxaEntrega: 5.0,
+                ativa: true,
             },
             authenticate: {
                 $email: "chthug3@gmail.com",
@@ -50,36 +47,66 @@ const doc = {
                 $description: "Descrição da categoria exemplo",
             },
             addProduct: {
-                $name: "Produto Exemplo",
-                $description: "Descrição do produto exemplo",
-                $price: 99.99,
-                $quantity: 10,
-                $categoryId: "1234567890abcdef12345678", // ID da categoria
+                $nome: "Produto Exemplo",
+                $descricao: "Descrição do produto exemplo",
+                $preco: 99.99,
+                imagem: null,
+                $categoria: {
+                    id: "1234567890abcdef12345678", // ID da categoria
+                },
+                ativa: true,
             },
             addPaymentMethod: {
-                $name: "Cartão de Crédito",
-                $description: "Pagamento via cartão de crédito",
+                $nome: "Cartão de Crédito",
+                $descricao: "Pagamento via cartão de crédito",
             },
             addOrder: {
-                $userId: "1234567890abcdef12345678", // ID do usuário
-                $companyId: "1234567890abcdef12345678", // ID da empresa
-                $products: [
-                    {
-                        productId: "1234567890abcdef12345678", // ID do produto
-                        quantity: 2,
-                    },
-                ],
-                $totalPrice: 199.98,
-                $paymentMethodId: "1234567890abcdef12345678", // ID do método de pagamento
-                $status: {
-                    "@enum": ["PENDING", null],
-                }, // Status do pedido
-                observacoes: null,
+                $empresa: {
+                    id: "1234567890abcdef12345678", // ID da empresa
+                },
+                $cliente: {
+                    nome: "Carter",
+                    telefone: "11999999999",
+                },
+                endereco: {
+                    cep: "12345-678",
+                    logradouro: "Rua Exemplo",
+                    numero: "123",
+                    complemento: "Apto 456",
+                    cidade: "São Paulo",
+                    uf: "SP",
+                },
+                status: "PENDENTE",
             },
             updateOrderStatus: {
                 $status: {
                     "@enum": ["APROVADO", "ENTREGA", "CONCLUIDO", "CANCELADO"],
                 },
+            },
+
+            updateCategory: {
+                $descricao: "Nova descrição da categoria",
+                $ativa: true,
+            },
+
+            updateProduct: {
+                $nome: "Novo Nome do Produto",
+                $descricao: "Nova descrição do produto",
+                $preco: 89.99,
+                imagem: null,
+                $categoria: {
+                    id: "1234567890abcdef12345678", // ID da nova categoria
+                },
+                ativa: false,
+            },
+            updatePaymentMethod: {
+                $nome: "Novo Nome do Método de Pagamento",
+                $descricao: "Nova descrição do método de pagamento",
+            },
+            updateUser: {
+                $nome: "Charter Carter",
+                $email: "charter.carter@example.com",
+                $password: "novaSenha123",
             },
         },
         parameters: {

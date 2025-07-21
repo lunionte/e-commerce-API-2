@@ -10,7 +10,9 @@ export type Address = {
 };
 
 export const orderAddressSchema = Joi.object().keys({
-    cep: Joi.string().allow(null).default(null),
+    cep: Joi.string()
+        .pattern(/^\d{5}-?\d{3}$/)
+        .required(),
     logradouro: Joi.string().trim().required(),
     numero: Joi.string().trim().required(),
     complemento: Joi.string().trim().required(),

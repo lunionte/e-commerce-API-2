@@ -51,6 +51,16 @@ export class UsersController {
         // #swagger.tags = ['Users']
         // #swagger.summary = Atualização de usuário
         // #swagger.description = 'Atualiza os dados do usuário especificado pelo ID.'
+        /* #swagger.requestBody = {
+             required: true,
+             content: {
+                 "application/json": {
+                     schema: {
+                         $ref: "#/components/schemas/updateUser"
+                     }
+                 }
+             }
+         } */
 
         const userId = req.params.id;
         const user = req.body as User;

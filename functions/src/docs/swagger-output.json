@@ -74,8 +74,8 @@
         "summary": "Recuperação de senha",
         "description": "Inicia o processo de recuperação de senha para o usuário com o email fornecido.",
         "responses": {
-          "default": {
-            "description": ""
+          "204": {
+            "description": "No Content"
           }
         },
         "requestBody": {
@@ -207,7 +207,17 @@
           {
             "bearerAuth": []
           }
-        ]
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateUser"
+              }
+            }
+          }
+        }
       },
       "delete": {
         "tags": [
@@ -336,7 +346,17 @@
           {
             "bearerAuth": []
           }
-        ]
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateCompany"
+              }
+            }
+          }
+        }
       }
     },
     "/categories": {
@@ -438,7 +458,17 @@
           {
             "bearerAuth": []
           }
-        ]
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateCategory"
+              }
+            }
+          }
+        }
       },
       "delete": {
         "tags": [
@@ -594,7 +624,17 @@
           {
             "bearerAuth": []
           }
-        ]
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateProduct"
+              }
+            }
+          }
+        }
       },
       "delete": {
         "tags": [
@@ -723,7 +763,17 @@
           {
             "bearerAuth": []
           }
-        ]
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updatePaymentMethod"
+              }
+            }
+          }
+        }
       },
       "delete": {
         "tags": [
@@ -944,71 +994,52 @@
       "addCompany": {
         "type": "object",
         "properties": {
-          "name": {
+          "logomarca": {
             "type": "string",
-            "example": "Empresa Exemplo"
+            "example": "base64string"
           },
           "cnpj": {
             "type": "string",
             "example": "12345678000195"
           },
-          "email": {
+          "razaoSocial": {
             "type": "string",
-            "example": "empresa@exemplo.com"
+            "example": "Empresa Exemplo LTDA"
           },
-          "phone": {
+          "nomeFantasia": {
+            "type": "string",
+            "example": "Empresa Exemplo"
+          },
+          "telefone": {
             "type": "string",
             "example": "11999999999"
           },
-          "address": {
-            "type": "object",
-            "properties": {
-              "street": {
-                "type": "string",
-                "example": "Rua Exemplo"
-              },
-              "number": {
-                "type": "string",
-                "example": "123"
-              },
-              "complement": {
-                "type": "string",
-                "example": "Apto 456"
-              },
-              "district": {
-                "type": "string",
-                "example": "Bairro Exemplo"
-              },
-              "city": {
-                "type": "string",
-                "example": "Cidade Exemplo"
-              },
-              "state": {
-                "type": "string",
-                "example": "SP"
-              },
-              "zipCode": {
-                "type": "string",
-                "example": "12345678"
-              }
-            },
-            "required": [
-              "street",
-              "number",
-              "complement",
-              "district",
-              "city",
-              "state",
-              "zipCode"
-            ]
+          "horarioFuncionamento": {
+            "type": "string",
+            "example": "08:00 - 18:00"
+          },
+          "endereco": {
+            "type": "string",
+            "example": "rua exemplo, 123"
+          },
+          "localizacao": {
+            "type": "string",
+            "example": "77.123456, -46.123456"
+          },
+          "taxaEntrega": {
+            "type": "number",
+            "example": 5
+          },
+          "ativa": {
+            "type": "boolean",
+            "example": true
           }
         },
         "required": [
-          "name",
+          "logomarca",
           "cnpj",
-          "email",
-          "phone",
-          "address"
+          "razaoSocial",
+          "nomeFantasia"
         ]
       },
       "authenticate": {
@@ -1047,103 +1078,119 @@
       "addProduct": {
         "type": "object",
         "properties": {
-          "name": {
+          "nome": {
             "type": "string",
             "example": "Produto Exemplo"
           },
-          "description": {
+          "descricao": {
             "type": "string",
             "example": "Descrição do produto exemplo"
           },
-          "price": {
+          "preco": {
             "type": "number",
             "example": 99.99
           },
-          "quantity": {
-            "type": "number",
-            "example": 10
+          "imagem": {},
+          "categoria": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "1234567890abcdef12345678"
+              }
+            }
           },
-          "categoryId": {
-            "type": "string",
-            "example": "1234567890abcdef12345678"
+          "ativa": {
+            "type": "boolean",
+            "example": true
           }
         },
         "required": [
-          "name",
-          "description",
-          "price",
-          "quantity",
-          "categoryId"
+          "nome",
+          "descricao",
+          "preco",
+          "categoria"
         ]
       },
       "addPaymentMethod": {
         "type": "object",
         "properties": {
-          "name": {
+          "nome": {
             "type": "string",
             "example": "Cartão de Crédito"
           },
-          "description": {
+          "descricao": {
             "type": "string",
             "example": "Pagamento via cartão de crédito"
           }
         },
         "required": [
-          "name",
-          "description"
+          "nome",
+          "descricao"
         ]
       },
       "addOrder": {
         "type": "object",
         "properties": {
-          "userId": {
-            "type": "string",
-            "example": "1234567890abcdef12345678"
-          },
-          "companyId": {
-            "type": "string",
-            "example": "1234567890abcdef12345678"
-          },
-          "products": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "productId": {
-                  "type": "string",
-                  "example": "1234567890abcdef12345678"
-                },
-                "quantity": {
-                  "type": "number",
-                  "example": 2
-                }
+          "empresa": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "1234567890abcdef12345678"
               }
             }
           },
-          "totalPrice": {
-            "type": "number",
-            "example": 199.98
+          "cliente": {
+            "type": "object",
+            "properties": {
+              "nome": {
+                "type": "string",
+                "example": "Carter"
+              },
+              "telefone": {
+                "type": "string",
+                "example": "11999999999"
+              }
+            }
           },
-          "paymentMethodId": {
-            "type": "string",
-            "example": "1234567890abcdef12345678"
+          "endereco": {
+            "type": "object",
+            "properties": {
+              "cep": {
+                "type": "string",
+                "example": "12345-678"
+              },
+              "logradouro": {
+                "type": "string",
+                "example": "Rua Exemplo"
+              },
+              "numero": {
+                "type": "string",
+                "example": "123"
+              },
+              "complemento": {
+                "type": "string",
+                "example": "Apto 456"
+              },
+              "cidade": {
+                "type": "string",
+                "example": "São Paulo"
+              },
+              "uf": {
+                "type": "string",
+                "example": "SP"
+              }
+            }
           },
           "status": {
             "type": "string",
-            "enum": [
-              "PENDING",
-              null
-            ]
-          },
-          "observacoes": {}
+            "example": "PENDENTE"
+          }
         },
         "required": [
-          "userId",
-          "companyId",
-          "products",
-          "totalPrice",
-          "paymentMethodId",
-          "status"
+          "empresa",
+          "cliente"
         ]
       },
       "updateOrderStatus": {
@@ -1161,6 +1208,99 @@
         },
         "required": [
           "status"
+        ]
+      },
+      "updateCategory": {
+        "type": "object",
+        "properties": {
+          "descricao": {
+            "type": "string",
+            "example": "Nova descrição da categoria"
+          },
+          "ativa": {
+            "type": "boolean",
+            "example": true
+          }
+        },
+        "required": [
+          "descricao",
+          "ativa"
+        ]
+      },
+      "updateProduct": {
+        "type": "object",
+        "properties": {
+          "nome": {
+            "type": "string",
+            "example": "Novo Nome do Produto"
+          },
+          "descricao": {
+            "type": "string",
+            "example": "Nova descrição do produto"
+          },
+          "preco": {
+            "type": "number",
+            "example": 89.99
+          },
+          "imagem": {},
+          "categoria": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "1234567890abcdef12345678"
+              }
+            }
+          },
+          "ativa": {
+            "type": "boolean",
+            "example": false
+          }
+        },
+        "required": [
+          "nome",
+          "descricao",
+          "preco",
+          "categoria"
+        ]
+      },
+      "updatePaymentMethod": {
+        "type": "object",
+        "properties": {
+          "nome": {
+            "type": "string",
+            "example": "Novo Nome do Método de Pagamento"
+          },
+          "descricao": {
+            "type": "string",
+            "example": "Nova descrição do método de pagamento"
+          }
+        },
+        "required": [
+          "nome",
+          "descricao"
+        ]
+      },
+      "updateUser": {
+        "type": "object",
+        "properties": {
+          "nome": {
+            "type": "string",
+            "example": "Charter Carter"
+          },
+          "email": {
+            "type": "string",
+            "example": "charter.carter@example.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "novaSenha123"
+          }
+        },
+        "required": [
+          "nome",
+          "email",
+          "password"
         ]
       }
     },

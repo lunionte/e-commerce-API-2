@@ -74,16 +74,14 @@ export const newOrderSchema = Joi.object().keys({
         })
         .required(),
     cliente: customerShema.required(),
+    isEntrega: Joi.boolean().required(),
     endereco: Joi.alternatives().conditional("isEntrega", {
         is: true,
         then: orderAddressSchema.required(),
-        // valid(null) é a mesma coisa de only().allow(null)
-        otherwise: Joi.object().only().allow(null).default(null),
     }),
     cpfCnpjCupom: Joi.alternatives()
         .try(Joi.string().length(11).required(), Joi.string().length(14).required())
         .default(null),
-    isEntrega: Joi.boolean().required(),
     formaPagamento: Joi.object().keys({
         id: Joi.string().trim().required(),
     }),

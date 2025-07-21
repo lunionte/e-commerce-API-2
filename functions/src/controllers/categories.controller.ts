@@ -45,6 +45,17 @@ export class CategoriesController {
         // #swagger.tags = ['Categories']
         // #swagger.summary = Atualização de categoria
         // #swagger.description = 'Atualiza os dados da categoria especificada pelo ID.'
+        /* #swagger.requestBody = {
+             required: true,
+             content: {
+                 "application/json": {
+                     schema: {
+                         $ref: "#/components/schemas/updateCategory"
+                     }
+                 }
+             }
+         }
+       */
 
         const categoryId = req.params.id;
         const category = req.body;

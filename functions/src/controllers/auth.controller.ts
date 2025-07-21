@@ -33,7 +33,7 @@ export class AuthController {
 
         const { email } = req.body;
         await new AuthService().recovery(email);
-        res.end();
+        res.status(204).end();
     }
 
     static async signin(req: Request, res: Response) {

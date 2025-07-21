@@ -59,6 +59,16 @@ export class ProductsController {
         // #swagger.tags = ['Products']
         // #swagger.summary = Atualização de produto
         // #swagger.description = 'Atualiza os dados do produto especificado pelo ID.'
+        /* #swagger.requestBody = {
+             required: true,
+             content: {
+                 "application/json": {
+                     schema: {
+                         $ref: "#/components/schemas/updateProduct"
+                     }
+                 }
+             }
+         } */
 
         const id = req.params.id;
         const product = req.body as Product;
