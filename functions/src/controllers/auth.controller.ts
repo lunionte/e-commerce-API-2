@@ -15,7 +15,23 @@ export class AuthController {
                     }
                 }
             }
-        } */
+        } 
+            #swagger.responses[200] = {
+                description: 'Token de autenticação retornado com sucesso.',   
+                content: {
+                    "application/json": {
+                        schema: {
+                            type: "object",
+                            properties: {
+                                token: {
+                                    type: "string",
+                                }
+                            }
+                        }
+                    }
+                } 
+            }
+        */
 
         const { email, password } = req.body;
         const userRecord = await new AuthService().login(email, password);
@@ -40,6 +56,22 @@ export class AuthController {
         // #swagger.tags = ['Auth']
         // #swagger.summary = Registro de usuários
         // #swagger.description = 'Registra um novo usuário e retorna um token de autenticação.'
+        /* #swagger.responses[200] = {
+            description: 'Token de autenticação retornado com sucesso.',
+            content: {
+                "application/json": {
+                    schema: {
+                        type: "object",
+                        properties: {
+                            token: {
+                                type: "string",
+                                description: "Token de autenticação do usuário."
+                            }
+                        }
+                    }
+                }
+            }
+        } */
         const userRecord = await new AuthService().signin();
         const token = await userRecord.user.getIdToken(true);
         res.json({ token: token });

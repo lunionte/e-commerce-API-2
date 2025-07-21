@@ -51,7 +51,19 @@
         "description": "Realiza o login do usuário com email e senha, retornando um token de autenticação.",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Token de autenticação retornado com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "requestBody": {
@@ -103,7 +115,20 @@
         "description": "Registra um novo usuário e retorna um token de autenticação.",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Token de autenticação retornado com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "description": "Token de autenticação do usuário."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -117,7 +142,17 @@
         "description": "Retorna todos os usuários disponíveis no sistema.",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Dados do usuário",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
           }
         },
         "security": [
@@ -173,7 +208,14 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Dados do usuário",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -990,6 +1032,23 @@
           "email",
           "password"
         ]
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "1234567890abcdef12345678"
+          },
+          "nome": {
+            "type": "string",
+            "example": "chthug3@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "123456"
+          }
+        }
       },
       "addCompany": {
         "type": "object",

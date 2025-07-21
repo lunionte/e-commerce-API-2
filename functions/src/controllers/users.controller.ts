@@ -12,6 +12,21 @@ export class UsersController {
         // #swagger.tags = ['Users']
         // #swagger.summary = Listagem de usuários
         // #swagger.description = 'Retorna todos os usuários disponíveis no sistema.'
+        /* #swagger.responses[200] = {
+                description: 'Dados do usuário',
+                content: {
+                    "application/json": {
+                        schema: {
+                            type: 'array',
+                            items: {
+                                $ref: "#/components/schemas/User"
+                            }
+                        }
+                    }
+                }
+            }
+
+        */
         res.json(await new UserService().getAll());
     }
 
@@ -19,6 +34,18 @@ export class UsersController {
         // #swagger.tags = ['Users']
         // #swagger.summary = Detalhes do usuário
         // #swagger.description = 'Retorna os detalhes do usuário especificado pelo ID.'
+        /* #swagger.responses[200] = {
+                description: 'Dados do usuário',
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/components/schemas/User"
+                        }
+                    }
+                }
+            }
+
+        */
         const userId = req.params.id;
         res.json(await new UserService().getById(userId));
     }

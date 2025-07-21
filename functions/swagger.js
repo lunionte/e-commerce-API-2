@@ -26,6 +26,11 @@ const doc = {
                 $email: "chthug3@gmail.com",
                 $password: "123456",
             },
+            User: {
+                id: "1234567890abcdef12345678",
+                nome: "chthug3@gmail.com",
+                password: "123456",
+            },
             addCompany: {
                 $logomarca: "base64string",
                 $cnpj: "12345678000195",
